@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>K-POP GAME DAY — 主控端</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0a0010;--surface:#140020;--surface2:#1e0030;--border:rgba(180,80,255,0.3);
+  --purple:#c050ff;--pink:#ff40cc;--yellow:#ffcc00;--gold:#ffd700;--teal:#00f0c8;
+  --white:#f5eeff;--muted:rgba(245,238,255,0.5);--radius:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--white);font-family:'Noto Sans TC',sans-serif;min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 70% 50% at 20% 0%,rgba(140,30,255,0.2) 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 80% 100%,rgba(255,40,180,0.12) 0%,transparent 60%),repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(180,80,255,0.03) 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(180,80,255,0.03) 40px);pointer-events:none;z-index:0;}
+.app{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:16px;}
+.header{text-align:center;padding:20px 0 16px;border-bottom:1px solid var(--border);margin-bottom:16px;}
+.header img{height:90px;object-fit:contain;filter:drop-shadow(0 0 20px rgba(200,80,255,0.6));}
+.header-title{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:4px;background:linear-gradient(135deg,#c050ff,#ff40cc,#ffcc00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.header-sub{font-size:11px;color:var(--muted);letter-spacing:5px;margin-top:4px;text-transform:uppercase;}
+.nav{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;}
+.nav-btn{padding:8px 16px;border-radius:100px;border:1.5px solid var(--border);background:var(--surface);color:var(--muted);font-family:'Noto Sans TC',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;letter-spacing:1px;}
+.nav-btn:hover{border-color:var(--purple);color:var(--white);}
+.nav-btn.active{background:linear-gradient(135deg,var(--purple),var(--pink));border-color:transparent;color:white;box-shadow:0 4px 16px rgba(200,80,255,0.4);}
+.panel{display:none;}.panel.active{display:block;}
+.timer-bar{display:flex;align-items:center;gap:12px;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:12px 16px;margin-bottom:14px;}
+.timer-display{font-family:'Bebas Neue',sans-serif;font-size:44px;color:var(--white);letter-spacing:2px;line-height:1;min-width:80px;}
+.timer-display.warning{color:var(--pink);}
+.timer-controls{display:flex;gap:6px;flex-wrap:wrap;}
+.timer-btn{padding:7px 14px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface2);color:var(--white);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.15s;}
+.timer-btn:hover{border-color:var(--purple);}
+.timer-btn.primary{background:linear-gradient(135deg,var(--purple),var(--pink));border-color:transparent;box-shadow:0 2px 10px rgba(200,80,255,0.3);}
+.timer-label{font-size:11px;color:var(--muted);margin-left:auto;letter-spacing:2px;}
+.leaderboard{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:14px 18px;margin-bottom:14px;}
+.lb-title{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:4px;color:var(--muted);margin-bottom:10px;}
+.lb-row{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
+.lb-row:last-child{border-bottom:none;}
+.lb-rank{font-family:'Bebas Neue',sans-serif;font-size:18px;width:24px;color:var(--muted);}
+.lb-name{font-size:13px;font-weight:700;width:64px;}
+.lb-bar-wrap{flex:1;height:7px;background:rgba(255,255,255,0.07);border-radius:4px;overflow:hidden;}
+.lb-bar{height:100%;border-radius:4px;transition:width 0.5s ease;}
+.lb-pts{font-family:'Bebas Neue',sans-serif;font-size:18px;width:40px;text-align:right;color:var(--yellow);}
+.score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
+.player-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:14px 12px;text-align:center;position:relative;overflow:hidden;}
+.player-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--player-color,var(--purple));}
+.player-avatar{width:46px;height:46px;border-radius:50%;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:20px;color:white;font-weight:900;}
+.player-name{font-size:14px;font-weight:700;margin-bottom:2px;}
+.player-score{font-family:'Bebas Neue',sans-serif;font-size:38px;line-height:1;margin-bottom:8px;}
+.rank-badge{position:absolute;top:8px;right:8px;font-family:'Bebas Neue',sans-serif;font-size:11px;padding:2px 7px;border-radius:100px;background:var(--surface2);color:var(--muted);border:1px solid var(--border);}
+.rank-badge.gold{background:rgba(255,215,0,0.18);color:var(--gold);border-color:var(--gold);}
+.rank-badge.silver{background:rgba(200,200,220,0.12);color:#c8c8dc;border-color:#c8c8dc;}
+.rank-badge.bronze{background:rgba(200,140,80,0.12);color:#c88c50;border-color:#c88c50;}
+.mbadge{position:absolute;top:8px;left:8px;font-size:13px;}
+.score-controls{display:flex;gap:4px;justify-content:center;flex-wrap:wrap;}
+.score-btn{padding:3px 8px;border-radius:7px;border:1px solid var(--border);background:var(--surface2);color:var(--white);font-size:11px;font-weight:700;cursor:pointer;transition:all 0.15s;}
+.score-btn:hover{background:var(--purple);border-color:var(--purple);}
+.score-btn.minus{color:var(--muted);}
+.score-btn.minus:hover{background:rgba(255,80,120,0.25);border-color:var(--pink);color:var(--pink);}
+.game-select-row{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;}
+.game-tag{padding:6px 14px;border-radius:100px;border:1.5px solid var(--border);background:var(--surface2);color:var(--muted);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.15s;}
+.game-tag.active{border-color:var(--yellow);color:var(--yellow);background:rgba(255,204,0,0.1);}
+.game-score-panel{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:14px;}
+.game-score-title{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:3px;color:var(--yellow);margin-bottom:12px;}
+.game-score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.gpi{background:var(--surface2);border-radius:10px;padding:10px;text-align:center;}
+.gpi-name{font-size:12px;color:var(--muted);margin-bottom:4px;}
+.gpi-pts{font-family:'Bebas Neue',sans-serif;font-size:28px;}
+.gpi-ctrl{display:flex;gap:4px;justify-content:center;margin-top:6px;}
+.detail-table{width:100%;border-collapse:collapse;font-size:12px;}
+.detail-table th{background:var(--surface2);color:var(--muted);padding:8px 10px;text-align:center;font-weight:700;letter-spacing:1px;border:1px solid rgba(255,255,255,0.06);}
+.detail-table td{padding:8px 10px;text-align:center;border:1px solid rgba(255,255,255,0.06);}
+.detail-table tr:nth-child(even) td{background:rgba(255,255,255,0.02);}
+.tc{color:var(--yellow);font-family:'Bebas Neue',sans-serif;font-size:16px;}
+.pc{font-weight:700;text-align:left;}
+.mission-inner{max-width:520px;margin:0 auto;}
+.mission-big-title{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:4px;color:var(--purple);text-align:center;margin-bottom:6px;}
+.mission-sub{text-align:center;color:var(--muted);font-size:12px;margin-bottom:20px;line-height:1.7;}
+.draw-area{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:14px;}
+.draw-select{width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface2);color:var(--white);font-family:'Noto Sans TC',sans-serif;font-size:14px;font-weight:700;margin-bottom:12px;outline:none;cursor:pointer;}
+.draw-btn{width:100%;padding:12px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--purple),var(--pink));color:white;font-family:'Noto Sans TC',sans-serif;font-size:15px;font-weight:900;cursor:pointer;letter-spacing:2px;transition:all 0.2s;box-shadow:0 4px 16px rgba(200,80,255,0.3);}
+.draw-btn:hover{transform:translateY(-2px);}
+.draw-btn:disabled{opacity:0.4;cursor:not-allowed;transform:none;}
+.mission-reveal{background:var(--surface2);border:1.5px solid var(--purple);border-radius:var(--radius);padding:24px;text-align:center;display:none;box-shadow:0 0 40px rgba(200,80,255,0.2);margin-bottom:14px;}
+.reveal-label{font-size:11px;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-bottom:6px;}
+.reveal-player{font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--white);margin-bottom:16px;letter-spacing:2px;}
+.reveal-task{font-size:18px;font-weight:900;color:var(--yellow);line-height:1.5;margin-bottom:16px;padding:14px;background:rgba(255,204,0,0.07);border-radius:10px;border:1px solid rgba(255,204,0,0.2);}
+.confirm-btn{padding:9px 24px;border-radius:100px;border:1.5px solid var(--border);background:transparent;color:var(--muted);font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s;}
+.confirm-btn:hover{border-color:var(--purple);color:var(--white);}
+.msbox{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px;}
+.mstitle{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:3px;color:var(--muted);margin-bottom:10px;}
+.mrow{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
+.mrow:last-child{border-bottom:none;}
+.mdot{width:7px;height:7px;border-radius:50%;background:var(--border);flex-shrink:0;}
+.mdot.drawn{background:var(--purple);}
+.mdot.done{background:var(--teal);}
+.mdot.failed{background:var(--pink);}
+.mname{font-size:13px;font-weight:700;flex:1;}
+.mstate{font-size:11px;color:var(--muted);}
+.mbtns{display:flex;gap:5px;}
+.mcbtn{padding:3px 10px;border-radius:7px;border:1px solid var(--teal);background:transparent;color:var(--teal);font-size:11px;font-weight:700;cursor:pointer;}
+.mcbtn:hover{background:rgba(0,240,200,0.15);}
+.mfbtn{padding:3px 10px;border-radius:7px;border:1px solid var(--pink);background:transparent;color:var(--pink);font-size:11px;font-weight:700;cursor:pointer;}
+.mfbtn:hover{background:rgba(255,80,160,0.15);}
+.group-box{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:14px;}
+.group-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;color:var(--purple);margin-bottom:14px;}
+.team-setup{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.team-box{background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;padding:14px;}
+.team-name{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;margin-bottom:10px;}
+.team-name.a{color:#ff80cc;}.team-name.b{color:#80aaff;}
+.team-members{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;min-height:32px;}
+.tmc{padding:4px 10px;border-radius:100px;font-size:12px;font-weight:700;cursor:pointer;transition:all 0.15s;border:1px solid var(--border);background:var(--surface);color:var(--muted);}
+.tmc.in-a{background:rgba(255,128,204,0.2);border-color:#ff80cc;color:#ff80cc;}
+.tmc.in-b{background:rgba(128,170,255,0.2);border-color:#80aaff;color:#80aaff;}
+.team-score-big{font-family:'Bebas Neue',sans-serif;font-size:48px;color:var(--white);text-align:center;margin-bottom:10px;}
+.team-add-btn{width:100%;padding:10px;border-radius:10px;border:none;font-family:'Noto Sans TC',sans-serif;font-size:14px;font-weight:900;cursor:pointer;transition:all 0.2s;letter-spacing:1px;}
+.team-add-btn.a{background:linear-gradient(135deg,#ff40cc,#cc00aa);color:white;}
+.team-add-btn.b{background:linear-gradient(135deg,#4080ff,#0040cc);color:white;}
+.team-add-btn:hover{transform:translateY(-1px);}
+.upool{margin-bottom:14px;}
+.upool-title{font-size:12px;color:var(--muted);letter-spacing:2px;margin-bottom:8px;}
+.uchips{display:flex;flex-wrap:wrap;gap:6px;}
+.uchip{padding:5px 12px;border-radius:100px;font-size:12px;font-weight:700;cursor:pointer;background:var(--surface2);border:1.5px solid var(--border);color:var(--white);transition:all 0.15s;}
+.uchip:hover{border-color:var(--purple);}
+.award-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:100;align-items:center;justify-content:center;flex-direction:column;}
+.award-overlay.show{display:flex;}
+.award-box{text-align:center;max-width:500px;width:90%;}
+.award-title{font-family:'Bebas Neue',sans-serif;font-size:56px;letter-spacing:6px;background:linear-gradient(135deg,var(--yellow),var(--pink),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:32px;animation:pulse 1.5s ease-in-out infinite;}
+@keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.04);}}
+.award-podium{display:flex;align-items:flex-end;justify-content:center;gap:16px;margin-bottom:32px;}
+.podium-item{text-align:center;}
+.podium-avatar{width:70px;height:70px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:28px;color:white;margin:0 auto 8px;border:3px solid rgba(255,255,255,0.2);}
+.podium-name{font-size:16px;font-weight:900;margin-bottom:4px;}
+.podium-score{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--yellow);}
+.podium-medal{font-size:36px;margin-bottom:8px;}
+.podium-bar{width:80px;border-radius:8px 8px 0 0;}
+.podium-bar.first{height:120px;background:linear-gradient(to top,#cc8800,var(--gold));}
+.podium-bar.second{height:90px;background:linear-gradient(to top,#888,#ddd);}
+.podium-bar.third{height:70px;background:linear-gradient(to top,#885500,#c88c50);}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:99;}
+.close-award{padding:12px 32px;border-radius:100px;border:1.5px solid var(--border);background:transparent;color:var(--muted);font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;}
+.close-award:hover{border-color:var(--purple);color:var(--white);}
+.ice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.ice-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:14px;text-align:center;}
+.ice-avatar{width:50px;height:50px;border-radius:50%;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:22px;color:white;}
+.ice-name{font-size:14px;font-weight:900;}
+.toast-wrap{position:fixed;bottom:20px;right:20px;z-index:999;display:flex;flex-direction:column;gap:7px;}
+.toast{background:var(--surface2);border:1.5px solid var(--purple);border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;color:var(--white);box-shadow:0 8px 20px rgba(0,0,0,0.4);animation:slideIn 0.3s ease;max-width:260px;}
+@keyframes slideIn{from{opacity:0;transform:translateX(20px);}to{opacity:1;transform:translateX(0);}}
+.card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px;}
+.slabel{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:4px;color:var(--muted);margin-bottom:10px;}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <img src="未命名-19_工作區域_1.png" alt="logo" id="logoImg">
+    <div class="header-title" id="fallbackTitle" style="display:none">K-POP GAME DAY</div>
+    <div class="header-sub">主控端 · HOST</div>
+  </div>
+  <div class="nav">
+    <button class="nav-btn active" onclick="switchTab('score',this)">🏆 計分板</button>
+    <button class="nav-btn" onclick="switchTab('breakdown',this)">📊 明細</button>
+    <button class="nav-btn" onclick="switchTab('mission',this)">🕵️ 秘密任務</button>
+    <button class="nav-btn" onclick="switchTab('group',this)">👥 團體遊戲</button>
+    <button class="nav-btn" onclick="switchTab('ice',this)">🍳 破冰名單</button>
+    <button class="nav-btn" onclick="showAward()">🎖 頒獎</button>
+  </div>
+  <div class="timer-bar">
+    <div class="timer-display" id="timerDisplay">30</div>
+    <div class="timer-controls">
+      <button class="timer-btn primary" id="timerStartBtn" onclick="timerToggle()">▶ 開始</button>
+      <button class="timer-btn" onclick="timerReset(30)">30s</button>
+      <button class="timer-btn" onclick="timerReset(60)">60s</button>
+      <button class="timer-btn" onclick="timerReset(120)">2min</button>
+    </div>
+    <div class="timer-label">計時器</div>
+  </div>
+
+  <div class="panel active" id="panel-score">
+    <div class="leaderboard"><div class="lb-title">LEADERBOARD</div><div id="lbList"></div></div>
+    <div class="score-grid" id="scoreGrid"></div>
+  </div>
+
+  <div class="panel" id="panel-breakdown">
+    <div class="card">
+      <div class="slabel">依遊戲加分</div>
+      <div class="game-select-row" id="gameSelectRow"></div>
+      <div class="game-score-panel">
+        <div class="game-score-title" id="gameScoreTitle">選擇遊戲</div>
+        <div class="game-score-grid" id="gameScoreGrid"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="slabel">完整明細表</div>
+      <div style="overflow-x:auto"><table class="detail-table" id="detailTable"></table></div>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-mission">
+    <div class="mission-inner">
+      <div class="mission-big-title">秘密任務抽籤</div>
+      <div class="mission-sub">每位玩家輪流走過來抽籤<br>只有當事人和主持人知道任務內容</div>
+      <div class="draw-area">
+        <select class="draw-select" id="drawSelect"><option value="">— 選擇玩家 —</option></select>
+        <button class="draw-btn" id="drawBtn" onclick="drawMission()">🎲 抽取任務</button>
+      </div>
+      <div class="mission-reveal" id="missionReveal">
+        <div class="reveal-label">任務揭曉</div>
+        <div class="reveal-player" id="revealPlayer"></div>
+        <div class="reveal-task" id="revealTask"></div>
+        <button class="confirm-btn" onclick="confirmMission()">✓ 已閱讀，關閉</button>
+      </div>
+      <div class="msbox"><div class="mstitle">任務狀態</div><div id="missionStatusList"></div></div>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-group">
+    <div class="group-box">
+      <div class="group-title">👥 團體遊戲分隊</div>
+      <div class="upool">
+        <div class="upool-title">未分配（點擊自動分配到人數少的隊）</div>
+        <div class="uchips" id="unassignedChips"></div>
+      </div>
+      <div class="team-setup">
+        <div class="team-box">
+          <div class="team-name a">⭐ A 隊</div>
+          <div class="team-members" id="teamAMembers"></div>
+          <div class="team-score-big" id="teamAScore">0</div>
+          <button class="team-add-btn a" onclick="addTeamScore('A')">🏆 A隊獲勝 全員 +3</button>
+        </div>
+        <div class="team-box">
+          <div class="team-name b">⭐ B 隊</div>
+          <div class="team-members" id="teamBMembers"></div>
+          <div class="team-score-big" id="teamBScore">0</div>
+          <button class="team-add-btn b" onclick="addTeamScore('B')">🏆 B隊獲勝 全員 +3</button>
+        </div>
+      </div>
+      <button class="timer-btn" style="width:100%;padding:10px;margin-top:4px;" onclick="resetTeams()">🔄 重置隊伍</button>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-ice">
+    <div class="card">
+      <div class="slabel">🍳 平底鍋破冰遊戲 — 玩家名單</div>
+      <div class="ice-grid" id="iceGrid"></div>
+    </div>
+  </div>
+</div>
+
+<div class="award-overlay" id="awardOverlay">
+  <canvas class="confetti" id="confettiCanvas"></canvas>
+  <div class="award-box">
+    <div class="award-title">🏆 頒獎典禮</div>
+    <div class="award-podium" id="awardPodium"></div>
+    <button class="close-award" onclick="closeAward()">關閉</button>
+  </div>
+</div>
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-database.js";
+const firebaseConfig = {
+  apiKey:"AIzaSyCxooQDoIoUTzLXXmJ33_woXAQ2eP2UYrQ",
+  authDomain:"kpop-gameday.firebaseapp.com",
+  databaseURL:"https://kpop-gameday-default-rtdb.firebaseio.com",
+  projectId:"kpop-gameday",
+  storageBucket:"kpop-gameday.firebasestorage.app",
+  messagingSenderId:"993002749510",
+  appId:"1:993002749510:web:020c1121f4ba3f95395447"
+};
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+window._pushToFB = function(data) {
+  set(ref(db,'gameState'), data);
+};
+</script>
+
+<script>
+const PLAYERS=[
+  {id:0,name:'李明翰',color:'#c050ff'},{id:1,name:'葵',color:'#ff50aa'},
+  {id:2,name:'蒲姿羽',color:'#00d4ff'},{id:3,name:'莊子萱',color:'#ffe000'},
+  {id:4,name:'簡',color:'#ff8040'},{id:5,name:'Huan',color:'#40e090'},
+  {id:6,name:'酥函',color:'#ff4060'},{id:7,name:'Mio',color:'#80aaff'},
+  {id:8,name:'美嘉',color:'#ff80cc'}
+];
+const GAMES=['前奏猜歌','Emoji猜歌','韓文翻中文','混音猜歌','五官猜人','跳舞接龍','詞語接龍'];
+const MISSIONS=[
+  '誠心誇獎每一個人至少一次',
+  '和 5 個人合照（每張至多 3 人，大合照不算）',
+  '向 5 個人提出請求並讓對方完成',
+  '加所有人 IG 並發文或限動標注',
+  '講話時自然提及「拒同擔」5 次',
+  '講話時自然提及「滿額禮」5 次',
+  '講話時自然提及「年末舞台」5 次',
+  '在每個人身上貼一張貼紙',
+  '拿 5 個人的配飾穿在身上（不同時，需留照片存證）'
+];
+
+let gameScores={}, missionAssigned={}, missionDone={}, missionFailed={}, availableMissions=[...MISSIONS];
+let activeGame=GAMES[0], teamA=[], teamB=[];
+PLAYERS.forEach(p=>{gameScores[p.id]={};GAMES.forEach(g=>{gameScores[p.id][g]=0;});});
+
+function totalScore(id){return Object.values(gameScores[id]).reduce((a,b)=>a+b,0);}
+
+function pushState(){
+  const scores={};
+  PLAYERS.forEach(p=>{scores[p.id]=totalScore(p.id);});
+  if(window._pushToFB){
+    window._pushToFB({scores,gameScores,missionAssigned,missionDone,missionFailed,ts:Date.now()});
+  }
+}
+
+function switchTab(tab,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+tab).classList.add('active');
+  if(btn)btn.classList.add('active');
+  if(tab==='breakdown')renderBreakdown();
+  if(tab==='group')renderGroup();
+  if(tab==='ice')renderIce();
+}
+window.switchTab=switchTab;
+
+function addScore(pid,pts,game){
+  game=game||activeGame;
+  gameScores[pid][game]=Math.round((gameScores[pid][game]+pts)*10)/10;
+  if(gameScores[pid][game]<0)gameScores[pid][game]=0;
+  renderScoreGrid();renderLeaderboard();
+  if(document.getElementById('panel-breakdown').classList.contains('active'))renderBreakdown();
+  toast(`${PLAYERS[pid].name} ${pts>0?'+':''}${pts}分 (${game})`);
+  pushState();
+}
+window.addScore=addScore;
+
+function renderLeaderboard(){
+  const sorted=PLAYERS.map(p=>({...p,score:totalScore(p.id)})).sort((a,b)=>b.score-a.score);
+  const max=Math.max(...PLAYERS.map(p=>totalScore(p.id)),1);
+  const medals=['🥇','🥈','🥉','4','5','6','7','8','9'];
+  document.getElementById('lbList').innerHTML=sorted.map((p,i)=>`
+    <div class="lb-row">
+      <div class="lb-rank">${medals[i]}</div>
+      <div class="lb-name" style="color:${p.color}">${p.name}</div>
+      <div class="lb-bar-wrap"><div class="lb-bar" style="width:${(p.score/max)*100}%;background:${p.color}"></div></div>
+      <div class="lb-pts">${p.score}</div>
+    </div>`).join('');
+}
+
+function renderScoreGrid(){
+  const sorted=[...PLAYERS].map(p=>({id:p.id,s:totalScore(p.id)})).sort((a,b)=>b.s-a.s);
+  const ranks={};sorted.forEach((x,i)=>ranks[x.id]=i+1);
+  document.getElementById('scoreGrid').innerHTML=PLAYERS.map(p=>{
+    const r=ranks[p.id];
+    const rb=r===1?'gold':r===2?'silver':r===3?'bronze':'';
+    const rl=r===1?'🥇':r===2?'🥈':r===3?'🥉':`#${r}`;
+    const md=missionDone[p.id]?'✅':missionFailed[p.id]?'❌':'';
+    return `<div class="player-card" style="--player-color:${p.color}">
+      <span class="rank-badge ${rb}">${rl}</span>
+      ${md?`<span class="mbadge">${md}</span>`:''}
+      <div class="player-avatar" style="background:${p.color}22;border:2px solid ${p.color}44;color:${p.color}">${p.name.slice(0,2)}</div>
+      <div class="player-name">${p.name}</div>
+      <div class="player-score" style="color:${p.color}">${totalScore(p.id)}</div>
+      <div class="score-controls">
+        <button class="score-btn" onclick="addScore(${p.id},2)">+2</button>
+        <button class="score-btn" onclick="addScore(${p.id},1)">+1</button>
+        <button class="score-btn" onclick="addScore(${p.id},0.5)">+½</button>
+        <button class="score-btn minus" onclick="addScore(${p.id},-0.5)">-½</button>
+        <button class="score-btn minus" onclick="addScore(${p.id},-1)">-1</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderBreakdown(){
+  document.getElementById('gameSelectRow').innerHTML=GAMES.map(g=>
+    `<div class="game-tag ${g===activeGame?'active':''}" onclick="selectGame('${g}')">${g}</div>`
+  ).join('');
+  document.getElementById('gameScoreTitle').textContent=activeGame;
+  document.getElementById('gameScoreGrid').innerHTML=PLAYERS.map(p=>`
+    <div class="gpi">
+      <div class="gpi-name" style="color:${p.color}">${p.name}</div>
+      <div class="gpi-pts" style="color:${p.color}">${gameScores[p.id][activeGame]||0}</div>
+      <div class="gpi-ctrl">
+        <button class="score-btn" onclick="addScore(${p.id},1,'${activeGame}')">+1</button>
+        <button class="score-btn" onclick="addScore(${p.id},0.5,'${activeGame}')">+½</button>
+        <button class="score-btn minus" onclick="addScore(${p.id},-0.5,'${activeGame}')">-½</button>
+      </div>
+    </div>`).join('');
+  const sorted=PLAYERS.map(p=>({...p,score:totalScore(p.id)})).sort((a,b)=>b.score-a.score);
+  document.getElementById('detailTable').innerHTML=
+    `<tr><th>玩家</th>${GAMES.map(g=>`<th>${g}</th>`).join('')}<th>總分</th></tr>`+
+    sorted.map(p=>`<tr><td class="pc" style="color:${p.color}">${p.name}</td>${GAMES.map(g=>`<td>${gameScores[p.id][g]||0}</td>`).join('')}<td class="tc">${totalScore(p.id)}</td></tr>`).join('');
+}
+window.selectGame=function(g){activeGame=g;renderBreakdown();};
+
+function renderDrawSelect(){
+  document.getElementById('drawSelect').innerHTML='<option value="">— 選擇玩家 —</option>'+
+    PLAYERS.filter(p=>!(p.id in missionAssigned)).map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
+}
+
+window.drawMission=function(){
+  const sel=document.getElementById('drawSelect');
+  const pid=parseInt(sel.value);
+  if(isNaN(pid)){toast('請先選擇玩家 👆');return;}
+  if(availableMissions.length===0){toast('任務已全部分配');return;}
+  const idx=Math.floor(Math.random()*availableMissions.length);
+  const mission=availableMissions.splice(idx,1)[0];
+  missionAssigned[pid]=mission;
+  document.getElementById('revealPlayer').textContent=PLAYERS[pid].name;
+  document.getElementById('revealTask').textContent=mission;
+  document.getElementById('missionReveal').style.display='block';
+  document.getElementById('drawBtn').disabled=true;
+  renderDrawSelect();renderMissionStatus();pushState();
+};
+
+window.confirmMission=function(){
+  document.getElementById('missionReveal').style.display='none';
+  document.getElementById('drawBtn').disabled=false;
+  document.getElementById('drawSelect').value='';
+  toast('已確認，螢幕已清除 ✓');
+};
+
+window.completeMission=function(pid){
+  if(missionDone[pid]||missionFailed[pid])return;
+  missionDone[pid]=true;
+  const isFirst=Object.keys(missionDone).length===1;
+  renderMissionStatus();renderScoreGrid();
+  toast(isFirst?`🎉 ${PLAYERS[pid].name} 第一個完成！神秘禮物！`:`✅ ${PLAYERS[pid].name} 完成秘密任務！`);
+  pushState();
+};
+
+window.failMission=function(pid){
+  if(missionDone[pid]||missionFailed[pid])return;
+  missionFailed[pid]=true;
+  renderMissionStatus();renderScoreGrid();
+  toast(`❌ ${PLAYERS[pid].name} 的任務被發現了！`);
+  pushState();
+};
+
+function renderMissionStatus(){
+  document.getElementById('missionStatusList').innerHTML=PLAYERS.map(p=>{
+    const drawn=p.id in missionAssigned;
+    const done=missionDone[p.id];
+    const failed=missionFailed[p.id];
+    const dc=done?'done':failed?'failed':drawn?'drawn':'';
+    const st=done?'✅ 完成':failed?'❌ 被發現':drawn?'🎲 已抽到':'⏳ 未抽';
+    const btns=drawn&&!done&&!failed?`<div class="mbtns"><button class="mcbtn" onclick="completeMission(${p.id})">完成</button><button class="mfbtn" onclick="failMission(${p.id})">被發現</button></div>`:'';
+    return `<div class="mrow"><div class="mdot ${dc}"></div><div class="mname">${p.name}</div><div class="mstate">${st}</div>${btns}</div>`;
+  }).join('');
+}
+
+function renderGroup(){
+  const assigned=[...teamA,...teamB];
+  const unassigned=PLAYERS.filter(p=>!assigned.includes(p.id));
+  document.getElementById('unassignedChips').innerHTML=unassigned.map(p=>
+    `<div class="uchip" style="border-color:${p.color};color:${p.color}" onclick="assignTeam(${p.id})">${p.name}</div>`
+  ).join('');
+  document.getElementById('teamAMembers').innerHTML=teamA.map(id=>{const p=PLAYERS[id];return`<div class="tmc in-a" onclick="removeFromTeam(${id},'A')">${p.name} ✕</div>`;}).join('');
+  document.getElementById('teamBMembers').innerHTML=teamB.map(id=>{const p=PLAYERS[id];return`<div class="tmc in-b" onclick="removeFromTeam(${id},'B')">${p.name} ✕</div>`;}).join('');
+}
+window.assignTeam=function(pid){if(teamA.length<=teamB.length)teamA.push(pid);else teamB.push(pid);renderGroup();};
+window.removeFromTeam=function(pid,t){if(t==='A')teamA=teamA.filter(x=>x!==pid);else teamB=teamB.filter(x=>x!==pid);renderGroup();};
+window.addTeamScore=function(t){
+  const members=t==='A'?teamA:teamB;
+  const game=t==='A'?'跳舞接龍':'詞語接龍';
+  members.forEach(pid=>addScore(pid,3,game));
+  toast(`🏆 ${t}隊全員 +3分！`);
+};
+window.resetTeams=function(){teamA=[];teamB=[];renderGroup();};
+
+function renderIce(){
+  document.getElementById('iceGrid').innerHTML=PLAYERS.map(p=>`
+    <div class="ice-card">
+      <div class="ice-avatar" style="background:${p.color}33;border:2px solid ${p.color};color:${p.color}">${p.name.slice(0,2)}</div>
+      <div class="ice-name">${p.name}</div>
+    </div>`).join('');
+}
+
+window.showAward=function(){
+  const sorted=PLAYERS.map(p=>({...p,score:totalScore(p.id)})).sort((a,b)=>b.score-a.score);
+  const top3=sorted.slice(0,3);
+  const order=[1,0,2];
+  const medals=['🥇','🥈','🥉'];
+  const barCls=['first','second','third'];
+  document.getElementById('awardPodium').innerHTML=order.map(i=>{
+    const p=top3[i];if(!p)return'';
+    return`<div class="podium-item">
+      <div class="podium-medal">${medals[i]}</div>
+      <div class="podium-avatar" style="background:${p.color}33;border-color:${p.color};color:${p.color}">${p.name.slice(0,2)}</div>
+      <div class="podium-name">${p.name}</div>
+      <div class="podium-score">${p.score}分</div>
+      <div class="podium-bar ${barCls[i]}"></div>
+    </div>`;
+  }).join('');
+  document.getElementById('awardOverlay').classList.add('show');
+  startConfetti();
+};
+window.closeAward=function(){document.getElementById('awardOverlay').classList.remove('show');stopConfetti();};
+
+let confettiAnim;
+function startConfetti(){
+  const canvas=document.getElementById('confettiCanvas');
+  const ctx=canvas.getContext('2d');
+  canvas.width=window.innerWidth;canvas.height=window.innerHeight;
+  const pieces=Array.from({length:120},()=>({
+    x:Math.random()*canvas.width,y:Math.random()*canvas.height-canvas.height,
+    r:Math.random()*8+4,color:['#c050ff','#ff40cc','#ffcc00','#00f0c8','#ff8040','#80aaff'][Math.floor(Math.random()*6)],
+    speed:Math.random()*3+1,wobble:Math.random()*2-1,angle:Math.random()*360
+  }));
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    pieces.forEach(p=>{p.y+=p.speed;p.x+=p.wobble;p.angle+=3;if(p.y>canvas.height){p.y=-10;p.x=Math.random()*canvas.width;}
+    ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.angle*Math.PI/180);ctx.fillStyle=p.color;ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r);ctx.restore();});
+    confettiAnim=requestAnimationFrame(draw);
+  }
+  draw();
+}
+function stopConfetti(){cancelAnimationFrame(confettiAnim);const c=document.getElementById('confettiCanvas');c.getContext('2d').clearRect(0,0,c.width,c.height);}
+
+let timerVal=30,timerRunning=false,timerInterval=null;
+window.timerToggle=function(){
+  if(timerRunning){clearInterval(timerInterval);timerRunning=false;document.getElementById('timerStartBtn').textContent='▶ 繼續';}
+  else{timerRunning=true;document.getElementById('timerStartBtn').textContent='⏸ 暫停';
+    timerInterval=setInterval(()=>{timerVal--;updateTimerDisplay();
+      if(timerVal<=0){clearInterval(timerInterval);timerRunning=false;document.getElementById('timerStartBtn').textContent='▶ 重新開始';playTimeUpSound();toast('⏰ 時間到！');}
+    },1000);}
+};
+window.timerReset=function(s){clearInterval(timerInterval);timerRunning=false;timerVal=s;document.getElementById('timerStartBtn').textContent='▶ 開始';updateTimerDisplay();};
+function updateTimerDisplay(){const el=document.getElementById('timerDisplay');const m=Math.floor(timerVal/60),s=timerVal%60;el.textContent=m>0?`${m}:${String(s).padStart(2,'0')}`:String(timerVal);el.className='timer-display'+(timerVal<=10&&timerVal>0?' warning':'');}
+function playTimeUpSound(){try{const ctx=new(window.AudioContext||window.webkitAudioContext)();[523,659,784,1047].forEach((freq,i)=>{const o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.frequency.value=freq;g.gain.setValueAtTime(0.3,ctx.currentTime+i*0.15);g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+i*0.15+0.3);o.start(ctx.currentTime+i*0.15);o.stop(ctx.currentTime+i*0.15+0.3);});}catch(e){}}
+
+function toast(msg){const wrap=document.getElementById('toastWrap');const el=document.createElement('div');el.className='toast';el.textContent=msg;wrap.appendChild(el);setTimeout(()=>el.remove(),3000);}
+
+// logo fallback
+document.getElementById('logoImg').onerror=function(){this.style.display='none';document.getElementById('fallbackTitle').style.display='block';};
+
+renderScoreGrid();renderLeaderboard();renderDrawSelect();renderMissionStatus();
+</script>
+</body>
+</html>

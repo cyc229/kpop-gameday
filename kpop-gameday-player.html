@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>K-POP GAME DAY — 玩家</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0010;--surface:#140020;--surface2:#1e0030;--border:rgba(180,80,255,0.3);--purple:#c050ff;--pink:#ff40cc;--yellow:#ffcc00;--teal:#00f0c8;--white:#f5eeff;--muted:rgba(245,238,255,0.5);--radius:14px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--white);font-family:'Noto Sans TC',sans-serif;min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 70% 50% at 20% 0%,rgba(140,30,255,0.2) 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 80% 100%,rgba(255,40,180,0.12) 0%,transparent 60%);pointer-events:none;z-index:0;}
+.app{position:relative;z-index:1;max-width:480px;margin:0 auto;padding:16px;}
+.header{text-align:center;padding:20px 0 16px;border-bottom:1px solid var(--border);margin-bottom:20px;}
+.header img{height:70px;object-fit:contain;filter:drop-shadow(0 0 16px rgba(200,80,255,0.6));}
+.header-title{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:4px;background:linear-gradient(135deg,#c050ff,#ff40cc,#ffcc00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:none;}
+.header-sub{font-size:11px;color:var(--muted);letter-spacing:4px;margin-top:4px;text-transform:uppercase;}
+
+/* LOGIN */
+.login-box{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:28px;text-align:center;}
+.login-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:3px;color:var(--purple);margin-bottom:8px;}
+.login-sub{font-size:13px;color:var(--muted);margin-bottom:20px;}
+.player-select-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;}
+.ps-btn{padding:12px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface2);color:var(--white);font-family:'Noto Sans TC',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;}
+.ps-btn:hover,.ps-btn.selected{border-color:var(--purple);background:rgba(200,80,255,0.15);color:var(--purple);}
+.ps-btn.taken{opacity:0.3;cursor:not-allowed;pointer-events:none;}
+.login-btn{width:100%;padding:14px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--purple),var(--pink));color:white;font-family:'Noto Sans TC',sans-serif;font-size:16px;font-weight:900;cursor:pointer;letter-spacing:2px;transition:all 0.2s;box-shadow:0 4px 16px rgba(200,80,255,0.3);}
+.login-btn:hover{transform:translateY(-2px);}
+.login-btn:disabled{opacity:0.4;cursor:not-allowed;transform:none;}
+
+/* MAIN */
+.player-header{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px;text-align:center;margin-bottom:16px;}
+.ph-name{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:2px;}
+.ph-score{font-family:'Bebas Neue',sans-serif;font-size:64px;line-height:1;margin:4px 0;}
+.ph-label{font-size:11px;color:var(--muted);letter-spacing:3px;text-transform:uppercase;}
+
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:4px;color:var(--muted);margin-bottom:10px;}
+.card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px;}
+
+/* SCOREBOARD */
+.score-list{display:flex;flex-direction:column;gap:6px;}
+.sl-row{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;background:var(--surface2);}
+.sl-row.me{border:1.5px solid var(--purple);background:rgba(200,80,255,0.1);}
+.sl-rank{font-family:'Bebas Neue',sans-serif;font-size:20px;width:24px;}
+.sl-name{font-size:14px;font-weight:700;flex:1;}
+.sl-score{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--yellow);}
+
+/* MISSION */
+.mission-box{background:var(--surface2);border:1.5px solid var(--purple);border-radius:var(--radius);padding:20px;text-align:center;}
+.mission-status-label{font-size:11px;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;}
+.mission-text{font-size:17px;font-weight:900;color:var(--yellow);line-height:1.5;margin-bottom:14px;padding:12px;background:rgba(255,204,0,0.07);border-radius:10px;border:1px solid rgba(255,204,0,0.2);}
+.mission-waiting{font-size:15px;color:var(--muted);line-height:1.7;}
+.mission-state-done{font-size:13px;color:var(--teal);margin-top:6px;}
+.mission-state-fail{font-size:13px;color:var(--pink);margin-top:6px;}
+
+/* ANSWER */
+.answer-status{padding:12px;border-radius:10px;background:var(--surface2);border:1.5px solid var(--border);margin-bottom:10px;font-size:13px;color:var(--muted);text-align:center;}
+.answer-status.open{border-color:var(--teal);color:var(--teal);}
+.answer-input{width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface2);color:var(--white);font-family:'Noto Sans TC',sans-serif;font-size:15px;margin-bottom:8px;outline:none;}
+.answer-input:focus{border-color:var(--purple);}
+.answer-submit{width:100%;padding:12px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--purple),var(--pink));color:white;font-family:'Noto Sans TC',sans-serif;font-size:15px;font-weight:900;cursor:pointer;transition:all 0.2s;}
+.answer-submit:hover{transform:translateY(-1px);}
+.answer-submitted{text-align:center;padding:16px;color:var(--teal);font-weight:700;font-size:14px;}
+
+.toast-wrap{position:fixed;bottom:20px;right:20px;z-index:999;display:flex;flex-direction:column;gap:7px;}
+.toast{background:var(--surface2);border:1.5px solid var(--purple);border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;color:var(--white);box-shadow:0 8px 20px rgba(0,0,0,0.4);animation:slideIn 0.3s ease;max-width:260px;}
+@keyframes slideIn{from{opacity:0;transform:translateX(20px);}to{opacity:1;transform:translateX(0);}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <img src="未命名-19_工作區域_1.png" alt="logo" id="logoImg">
+    <div class="header-title" id="fallbackTitle">K-POP GAME DAY</div>
+    <div class="header-sub">玩家端 · PLAYER</div>
+  </div>
+
+  <!-- LOGIN -->
+  <div id="loginSection">
+    <div class="login-box">
+      <div class="login-title">選擇你是誰</div>
+      <div class="login-sub">點選你的名字登入</div>
+      <div class="player-select-grid" id="playerSelectGrid"></div>
+      <button class="login-btn" id="loginBtn" onclick="doLogin()" disabled>進入遊戲 ▶</button>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div id="mainSection" style="display:none">
+    <div class="player-header">
+      <div class="ph-label">玩家</div>
+      <div class="ph-name" id="phName" style="color:var(--purple)"></div>
+      <div class="ph-score" id="phScore" style="color:var(--yellow)">0</div>
+      <div class="ph-label">總分</div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">目前分數</div>
+      <div class="score-list" id="scoreList"></div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">🕵️ 我的秘密任務</div>
+      <div class="mission-box" id="missionBox">
+        <div class="mission-waiting">等待抽籤中⋯<br><span style="font-size:12px;opacity:0.6">走到主持人那裡抽取你的任務</span></div>
+      </div>
+    </div>
+
+    <div class="card" id="answerCard" style="display:none">
+      <div class="section-title" id="answerGameTitle">作答</div>
+      <div class="answer-status" id="answerStatus">等待題目開放中</div>
+      <div id="answerForm" style="display:none">
+        <input class="answer-input" id="answerInput" placeholder="輸入你的答案（團名 / 歌名）" autocomplete="off">
+        <button class="answer-submit" onclick="submitAnswer()">送出答案 ✓</button>
+      </div>
+      <div class="answer-submitted" id="answerSubmitted" style="display:none">✅ 已送出！等待公布答案</div>
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+import { getDatabase, ref, set, onValue, get } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-database.js";
+const firebaseConfig = {
+  apiKey:"AIzaSyCxooQDoIoUTzLXXmJ33_woXAQ2eP2UYrQ",
+  authDomain:"kpop-gameday.firebaseapp.com",
+  databaseURL:"https://kpop-gameday-default-rtdb.firebaseio.com",
+  projectId:"kpop-gameday",
+  storageBucket:"kpop-gameday.firebasestorage.app",
+  messagingSenderId:"993002749510",
+  appId:"1:993002749510:web:020c1121f4ba3f95395447"
+};
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+window._db = db;
+window._ref = ref;
+window._set = set;
+window._onValue = onValue;
+window._get = get;
+
+// Listen to game state
+const stateRef = ref(db, 'gameState');
+onValue(stateRef, (snapshot) => {
+  if (snapshot.exists()) {
+    const data = snapshot.val();
+    window._gameState = data;
+    if (window._myPlayerId !== undefined) {
+      updateMainView(data);
+    }
+  }
+});
+
+// Listen to online players
+const onlineRef = ref(db, 'online');
+onValue(onlineRef, (snapshot) => {
+  window._onlinePlayers = snapshot.exists() ? Object.values(snapshot.val()) : [];
+  renderPlayerSelect();
+});
+
+window._submitAnswerFB = function(playerId, game, answer) {
+  set(ref(db, `answers/${game}/${playerId}`), { answer, ts: Date.now() });
+};
+</script>
+
+<script>
+const PLAYERS=[
+  {id:0,name:'李明翰',color:'#c050ff'},{id:1,name:'葵',color:'#ff50aa'},
+  {id:2,name:'蒲姿羽',color:'#00d4ff'},{id:3,name:'莊子萱',color:'#ffe000'},
+  {id:4,name:'簡',color:'#ff8040'},{id:5,name:'Huan',color:'#40e090'},
+  {id:6,name:'酥函',color:'#ff4060'},{id:7,name:'Mio',color:'#80aaff'},
+  {id:8,name:'美嘉',color:'#ff80cc'}
+];
+
+window._myPlayerId = undefined;
+window._onlinePlayers = [];
+window._gameState = null;
+let selectedId = null;
+
+function renderPlayerSelect() {
+  const taken = window._onlinePlayers || [];
+  document.getElementById('playerSelectGrid').innerHTML = PLAYERS.map(p => {
+    const isTaken = taken.includes(p.id) && p.id !== selectedId;
+    return `<button class="ps-btn ${isTaken?'taken':''} ${selectedId===p.id?'selected':''}"
+      style="${selectedId===p.id?'border-color:'+p.color+';color:'+p.color:''}"
+      onclick="selectPlayer(${p.id})">${p.name}</button>`;
+  }).join('');
+}
+
+window.selectPlayer = function(id) {
+  selectedId = id;
+  document.getElementById('loginBtn').disabled = false;
+  renderPlayerSelect();
+};
+
+window.doLogin = function() {
+  if (selectedId === null) return;
+  window._myPlayerId = selectedId;
+  // register online
+  if (window._set && window._ref && window._db) {
+    window._set(window._ref(window._db, `online/${selectedId}`), selectedId);
+  }
+  const p = PLAYERS[selectedId];
+  document.getElementById('loginSection').style.display = 'none';
+  document.getElementById('mainSection').style.display = 'block';
+  document.getElementById('phName').textContent = p.name;
+  document.getElementById('phName').style.color = p.color;
+  if (window._gameState) updateMainView(window._gameState);
+  toast(`歡迎 ${p.name}！準備好了嗎 🎤`);
+};
+
+function updateMainView(data) {
+  const pid = window._myPlayerId;
+  if (pid === undefined) return;
+
+  // my score
+  const myScore = data.scores ? (data.scores[pid] || 0) : 0;
+  document.getElementById('phScore').textContent = myScore;
+
+  // scoreboard
+  const scores = data.scores || {};
+  const sorted = PLAYERS.map(p => ({...p, score: scores[p.id] || 0})).sort((a,b) => b.score - a.score);
+  const medals = ['🥇','🥈','🥉'];
+  document.getElementById('scoreList').innerHTML = sorted.map((p, i) => `
+    <div class="sl-row ${p.id === pid ? 'me' : ''}">
+      <div class="sl-rank" style="color:${p.color}">${i < 3 ? medals[i] : (i+1)}</div>
+      <div class="sl-name" style="color:${p.color}">${p.name}${p.id===pid?' (我)':''}</div>
+      <div class="sl-score">${p.score}</div>
+    </div>`).join('');
+
+  // mission
+  const assigned = data.missionAssigned || {};
+  const done = data.missionDone || {};
+  const failed = data.missionFailed || {};
+  const mbox = document.getElementById('missionBox');
+  if (assigned[pid]) {
+    const stateLabel = done[pid] ? '<div class="mission-state-done">✅ 任務完成！</div>' :
+                       failed[pid] ? '<div class="mission-state-fail">❌ 任務失敗</div>' : '';
+    mbox.innerHTML = `
+      <div class="mission-status-label">你的秘密任務</div>
+      <div class="mission-text">${assigned[pid]}</div>
+      ${stateLabel}
+      ${!done[pid]&&!failed[pid]?'<div style="font-size:11px;color:var(--muted);margin-top:8px">完成後向主持人宣告！</div>':''}`;
+  } else {
+    mbox.innerHTML = `<div class="mission-waiting">等待抽籤中⋯<br><span style="font-size:12px;opacity:0.6">走到主持人那裡抽取你的任務</span></div>`;
+  }
+}
+
+window.submitAnswer = function() {
+  const answer = document.getElementById('answerInput').value.trim();
+  if (!answer) { toast('請輸入答案！'); return; }
+  if (window._submitAnswerFB) {
+    window._submitAnswerFB(window._myPlayerId, 'current', answer);
+  }
+  document.getElementById('answerForm').style.display = 'none';
+  document.getElementById('answerSubmitted').style.display = 'block';
+  toast('答案已送出！✅');
+};
+
+function toast(msg) {
+  const wrap = document.getElementById('toastWrap');
+  const el = document.createElement('div'); el.className = 'toast'; el.textContent = msg;
+  wrap.appendChild(el); setTimeout(() => el.remove(), 3000);
+}
+
+document.getElementById('logoImg').onerror = function() {
+  this.style.display = 'none';
+  document.getElementById('fallbackTitle').style.display = 'block';
+};
+
+renderPlayerSelect();
+</script>
+</body>
+</html>
