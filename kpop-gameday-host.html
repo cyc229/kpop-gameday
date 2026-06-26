@@ -6,18 +6,14 @@
 <title>K-POP GAME DAY — 主控端</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg:#0a0010;--surface:#140020;--surface2:#1e0030;--border:rgba(180,80,255,0.3);
-  --purple:#c050ff;--pink:#ff40cc;--yellow:#ffcc00;--gold:#ffd700;--teal:#00f0c8;
-  --white:#f5eeff;--muted:rgba(245,238,255,0.5);--radius:14px;
-}
+:root{--bg:#0a0010;--surface:#140020;--surface2:#1e0030;--border:rgba(180,80,255,0.3);--purple:#c050ff;--pink:#ff40cc;--yellow:#ffcc00;--gold:#ffd700;--teal:#00f0c8;--white:#f5eeff;--muted:rgba(245,238,255,0.5);--radius:14px;}
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:var(--bg);color:var(--white);font-family:'Noto Sans TC',sans-serif;min-height:100vh;}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 70% 50% at 20% 0%,rgba(140,30,255,0.2) 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 80% 100%,rgba(255,40,180,0.12) 0%,transparent 60%),repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(180,80,255,0.03) 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(180,80,255,0.03) 40px);pointer-events:none;z-index:0;}
 .app{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:16px;}
 .header{text-align:center;padding:20px 0 16px;border-bottom:1px solid var(--border);margin-bottom:16px;}
 .header img{height:90px;object-fit:contain;filter:drop-shadow(0 0 20px rgba(200,80,255,0.6));}
-.header-title{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:4px;background:linear-gradient(135deg,#c050ff,#ff40cc,#ffcc00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.header-title{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:4px;background:linear-gradient(135deg,#c050ff,#ff40cc,#ffcc00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:none;}
 .header-sub{font-size:11px;color:var(--muted);letter-spacing:5px;margin-top:4px;text-transform:uppercase;}
 .nav{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;}
 .nav-btn{padding:8px 16px;border-radius:100px;border:1.5px solid var(--border);background:var(--surface);color:var(--muted);font-family:'Noto Sans TC',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;letter-spacing:1px;}
@@ -37,7 +33,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .lb-row{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
 .lb-row:last-child{border-bottom:none;}
 .lb-rank{font-family:'Bebas Neue',sans-serif;font-size:18px;width:24px;color:var(--muted);}
-.lb-name{font-size:13px;font-weight:700;width:64px;}
+.lb-name{font-size:13px;font-weight:700;width:70px;}
 .lb-bar-wrap{flex:1;height:7px;background:rgba(255,255,255,0.07);border-radius:4px;overflow:hidden;}
 .lb-bar{height:100%;border-radius:4px;transition:width 0.5s ease;}
 .lb-pts{font-family:'Bebas Neue',sans-serif;font-size:18px;width:40px;text-align:right;color:var(--yellow);}
@@ -92,11 +88,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .mrow{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
 .mrow:last-child{border-bottom:none;}
 .mdot{width:7px;height:7px;border-radius:50%;background:var(--border);flex-shrink:0;}
-.mdot.drawn{background:var(--purple);}
-.mdot.done{background:var(--teal);}
-.mdot.failed{background:var(--pink);}
-.mname{font-size:13px;font-weight:700;flex:1;}
-.mstate{font-size:11px;color:var(--muted);}
+.mdot.drawn{background:var(--purple);}.mdot.done{background:var(--teal);}.mdot.failed{background:var(--pink);}
+.mname{font-size:13px;font-weight:700;flex:1;}.mstate{font-size:11px;color:var(--muted);}
 .mbtns{display:flex;gap:5px;}
 .mcbtn{padding:3px 10px;border-radius:7px;border:1px solid var(--teal);background:transparent;color:var(--teal);font-size:11px;font-weight:700;cursor:pointer;}
 .mcbtn:hover{background:rgba(0,240,200,0.15);}
@@ -109,19 +102,39 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .team-name{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;margin-bottom:10px;}
 .team-name.a{color:#ff80cc;}.team-name.b{color:#80aaff;}
 .team-members{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;min-height:32px;}
-.tmc{padding:4px 10px;border-radius:100px;font-size:12px;font-weight:700;cursor:pointer;transition:all 0.15s;border:1px solid var(--border);background:var(--surface);color:var(--muted);}
+.tmc{padding:4px 10px;border-radius:100px;font-size:12px;font-weight:700;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--muted);}
 .tmc.in-a{background:rgba(255,128,204,0.2);border-color:#ff80cc;color:#ff80cc;}
 .tmc.in-b{background:rgba(128,170,255,0.2);border-color:#80aaff;color:#80aaff;}
 .team-score-big{font-family:'Bebas Neue',sans-serif;font-size:48px;color:var(--white);text-align:center;margin-bottom:10px;}
-.team-add-btn{width:100%;padding:10px;border-radius:10px;border:none;font-family:'Noto Sans TC',sans-serif;font-size:14px;font-weight:900;cursor:pointer;transition:all 0.2s;letter-spacing:1px;}
+.team-add-btn{width:100%;padding:10px;border-radius:10px;border:none;font-family:'Noto Sans TC',sans-serif;font-size:14px;font-weight:900;cursor:pointer;transition:all 0.2s;}
 .team-add-btn.a{background:linear-gradient(135deg,#ff40cc,#cc00aa);color:white;}
 .team-add-btn.b{background:linear-gradient(135deg,#4080ff,#0040cc);color:white;}
 .team-add-btn:hover{transform:translateY(-1px);}
-.upool{margin-bottom:14px;}
-.upool-title{font-size:12px;color:var(--muted);letter-spacing:2px;margin-bottom:8px;}
+.upool{margin-bottom:14px;}.upool-title{font-size:12px;color:var(--muted);letter-spacing:2px;margin-bottom:8px;}
 .uchips{display:flex;flex-wrap:wrap;gap:6px;}
 .uchip{padding:5px 12px;border-radius:100px;font-size:12px;font-weight:700;cursor:pointer;background:var(--surface2);border:1.5px solid var(--border);color:var(--white);transition:all 0.15s;}
 .uchip:hover{border-color:var(--purple);}
+/* ANSWER PANEL */
+.answer-game-tabs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.answer-panel-box{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:14px;}
+.answer-panel-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;color:var(--purple);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.answer-status-badge{font-size:11px;padding:3px 10px;border-radius:100px;border:1px solid var(--border);color:var(--muted);letter-spacing:2px;}
+.answer-status-badge.open{border-color:var(--teal);color:var(--teal);}
+.answer-open-btn{padding:10px 20px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--teal),#00b090);color:#0a0010;font-family:'Noto Sans TC',sans-serif;font-size:13px;font-weight:900;cursor:pointer;margin-right:8px;transition:all 0.2s;}
+.answer-open-btn:hover{transform:translateY(-1px);}
+.answer-reveal-btn{padding:10px 20px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--yellow),#cc8800);color:#0a0010;font-family:'Noto Sans TC',sans-serif;font-size:13px;font-weight:900;cursor:pointer;transition:all 0.2s;}
+.answer-reveal-btn:hover{transform:translateY(-1px);}
+.answer-reveal-btn:disabled{opacity:0.4;cursor:not-allowed;transform:none;}
+.answers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px;}
+.answer-card{background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;padding:12px;text-align:center;}
+.answer-card.has-answer{border-color:var(--purple);}
+.answer-card-name{font-size:12px;font-weight:700;margin-bottom:6px;}
+.answer-card-text{font-size:14px;font-weight:900;color:var(--yellow);min-height:20px;word-break:break-all;}
+.answer-card-text.hidden{filter:blur(6px);user-select:none;}
+.answer-card-waiting{font-size:11px;color:var(--muted);}
+.correct-answer-input{width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface2);color:var(--white);font-family:'Noto Sans TC',sans-serif;font-size:14px;margin-bottom:10px;outline:none;}
+.correct-answer-input:focus{border-color:var(--yellow);}
+/* AWARD */
 .award-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:100;align-items:center;justify-content:center;flex-direction:column;}
 .award-overlay.show{display:flex;}
 .award-box{text-align:center;max-width:500px;width:90%;}
@@ -149,18 +162,20 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 @keyframes slideIn{from{opacity:0;transform:translateX(20px);}to{opacity:1;transform:translateX(0);}}
 .card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px;}
 .slabel{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:4px;color:var(--muted);margin-bottom:10px;}
+.ctrl-row{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center;}
 </style>
 </head>
 <body>
 <div class="app">
   <div class="header">
-    <img src="未命名-19_工作區域_1.png" alt="logo" id="logoImg">
-    <div class="header-title" id="fallbackTitle" style="display:none">K-POP GAME DAY</div>
+    <img src="k-pop game day logo.png" alt="logo" id="logoImg">
+    <div class="header-title" id="fallbackTitle">K-POP GAME DAY</div>
     <div class="header-sub">主控端 · HOST</div>
   </div>
   <div class="nav">
     <button class="nav-btn active" onclick="switchTab('score',this)">🏆 計分板</button>
     <button class="nav-btn" onclick="switchTab('breakdown',this)">📊 明細</button>
+    <button class="nav-btn" onclick="switchTab('answers',this)">✏️ 答題</button>
     <button class="nav-btn" onclick="switchTab('mission',this)">🕵️ 秘密任務</button>
     <button class="nav-btn" onclick="switchTab('group',this)">👥 團體遊戲</button>
     <button class="nav-btn" onclick="switchTab('ice',this)">🍳 破冰名單</button>
@@ -195,6 +210,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <div class="slabel">完整明細表</div>
       <div style="overflow-x:auto"><table class="detail-table" id="detailTable"></table></div>
     </div>
+  </div>
+
+  <div class="panel" id="panel-answers">
+    <div class="answer-game-tabs" id="answerGameTabs"></div>
+    <div class="answer-panel-box" id="answerPanelBox"></div>
   </div>
 
   <div class="panel" id="panel-mission">
@@ -260,21 +280,40 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
-import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-database.js";
-const firebaseConfig = {
-  apiKey:"AIzaSyCxooQDoIoUTzLXXmJ33_woXAQ2eP2UYrQ",
-  authDomain:"kpop-gameday.firebaseapp.com",
-  databaseURL:"https://kpop-gameday-default-rtdb.firebaseio.com",
-  projectId:"kpop-gameday",
-  storageBucket:"kpop-gameday.firebasestorage.app",
-  messagingSenderId:"993002749510",
-  appId:"1:993002749510:web:020c1121f4ba3f95395447"
+import { getDatabase, ref, set, onValue, remove } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-database.js";
+const firebaseConfig={apiKey:"AIzaSyCxooQDoIoUTzLXXmJ33_woXAQ2eP2UYrQ",authDomain:"kpop-gameday.firebaseapp.com",databaseURL:"https://kpop-gameday-default-rtdb.firebaseio.com",projectId:"kpop-gameday",storageBucket:"kpop-gameday.firebasestorage.app",messagingSenderId:"993002749510",appId:"1:993002749510:web:020c1121f4ba3f95395447"};
+const app=initializeApp(firebaseConfig);
+const db=getDatabase(app);
+window._db=db; window._ref=ref; window._set=set; window._remove=remove;
+
+window._pushState=function(){
+  const scores={};
+  window._PLAYERS.forEach(p=>{scores[p.id]=window._totalScore(p.id);});
+  set(ref(db,'gameState'),{scores,gameScores:window._gameScores,missionAssigned:window._missionAssigned,missionDone:window._missionDone,missionFailed:window._missionFailed,ts:Date.now()});
 };
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-window._pushToFB = function(data) {
-  set(ref(db,'gameState'), data);
+
+window._pushAnswerState=function(game,state){
+  set(ref(db,`answerRound/${game}`),state);
 };
+
+// listen to answers
+onValue(ref(db,'answers'),snap=>{
+  window._allAnswers=snap.exists()?snap.val():{};
+  if(document.getElementById('panel-answers').classList.contains('active')) window._renderAnswerPanel();
+});
+
+// listen to players (for name/color updates)
+onValue(ref(db,'players'),snap=>{
+  if(snap.exists()){
+    const data=snap.val();
+    Object.values(data).forEach(p=>{
+      const found=window._PLAYERS.find(x=>x.id===p.id);
+      if(found){found.name=p.name;found.color=p.color;}
+    });
+    window._renderScoreGrid && window._renderScoreGrid();
+    window._renderLeaderboard && window._renderLeaderboard();
+  }
+});
 </script>
 
 <script>
@@ -285,32 +324,26 @@ const PLAYERS=[
   {id:6,name:'酥函',color:'#ff4060'},{id:7,name:'Mio',color:'#80aaff'},
   {id:8,name:'美嘉',color:'#ff80cc'}
 ];
+window._PLAYERS=PLAYERS;
 const GAMES=['前奏猜歌','Emoji猜歌','韓文翻中文','混音猜歌','五官猜人','跳舞接龍','詞語接龍'];
-const MISSIONS=[
-  '誠心誇獎每一個人至少一次',
-  '和 5 個人合照（每張至多 3 人，大合照不算）',
-  '向 5 個人提出請求並讓對方完成',
-  '加所有人 IG 並發文或限動標注',
-  '講話時自然提及「拒同擔」5 次',
-  '講話時自然提及「滿額禮」5 次',
-  '講話時自然提及「年末舞台」5 次',
-  '在每個人身上貼一張貼紙',
-  '拿 5 個人的配飾穿在身上（不同時，需留照片存證）'
-];
+const ANSWER_GAMES=['Emoji猜歌','韓文翻中文','混音猜歌'];
+const MISSIONS=['誠心誇獎每一個人至少一次','和 5 個人合照（每張至多 3 人，大合照不算）','向 5 個人提出請求並讓對方完成','加所有人 IG 並發文或限動標注','講話時自然提及「拒同擔」5 次','講話時自然提及「滿額禮」5 次','講話時自然提及「年末舞台」5 次','在每個人身上貼一張貼紙','拿 5 個人的配飾穿在身上（不同時，需留照片存證）'];
 
-let gameScores={}, missionAssigned={}, missionDone={}, missionFailed={}, availableMissions=[...MISSIONS];
-let activeGame=GAMES[0], teamA=[], teamB=[];
+let gameScores={},missionAssigned={},missionDone={},missionFailed={},availableMissions=[...MISSIONS];
+let activeGame=GAMES[0],activeAnswerGame=ANSWER_GAMES[0];
+let teamA=[],teamB=[];
+let answerRoundOpen={},answerRevealed={};
+window._allAnswers={};
+window._gameScores=gameScores;
+window._missionAssigned=missionAssigned;
+window._missionDone=missionDone;
+window._missionFailed=missionFailed;
 PLAYERS.forEach(p=>{gameScores[p.id]={};GAMES.forEach(g=>{gameScores[p.id][g]=0;});});
 
 function totalScore(id){return Object.values(gameScores[id]).reduce((a,b)=>a+b,0);}
+window._totalScore=totalScore;
 
-function pushState(){
-  const scores={};
-  PLAYERS.forEach(p=>{scores[p.id]=totalScore(p.id);});
-  if(window._pushToFB){
-    window._pushToFB({scores,gameScores,missionAssigned,missionDone,missionFailed,ts:Date.now()});
-  }
-}
+function pushState(){if(window._pushState)window._pushState();}
 
 function switchTab(tab,btn){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
@@ -320,6 +353,7 @@ function switchTab(tab,btn){
   if(tab==='breakdown')renderBreakdown();
   if(tab==='group')renderGroup();
   if(tab==='ice')renderIce();
+  if(tab==='answers')renderAnswerTabs();
 }
 window.switchTab=switchTab;
 
@@ -346,6 +380,7 @@ function renderLeaderboard(){
       <div class="lb-pts">${p.score}</div>
     </div>`).join('');
 }
+window._renderLeaderboard=renderLeaderboard;
 
 function renderScoreGrid(){
   const sorted=[...PLAYERS].map(p=>({id:p.id,s:totalScore(p.id)})).sort((a,b)=>b.s-a.s);
@@ -371,11 +406,11 @@ function renderScoreGrid(){
     </div>`;
   }).join('');
 }
+window._renderScoreGrid=renderScoreGrid;
 
 function renderBreakdown(){
   document.getElementById('gameSelectRow').innerHTML=GAMES.map(g=>
-    `<div class="game-tag ${g===activeGame?'active':''}" onclick="selectGame('${g}')">${g}</div>`
-  ).join('');
+    `<div class="game-tag ${g===activeGame?'active':''}" onclick="selectGame('${g}')">${g}</div>`).join('');
   document.getElementById('gameScoreTitle').textContent=activeGame;
   document.getElementById('gameScoreGrid').innerHTML=PLAYERS.map(p=>`
     <div class="gpi">
@@ -394,11 +429,68 @@ function renderBreakdown(){
 }
 window.selectGame=function(g){activeGame=g;renderBreakdown();};
 
+// ANSWER PANEL
+function renderAnswerTabs(){
+  document.getElementById('answerGameTabs').innerHTML=ANSWER_GAMES.map(g=>
+    `<div class="game-tag ${g===activeAnswerGame?'active':''}" onclick="selectAnswerGame('${g}')">${g}</div>`).join('');
+  renderAnswerPanel();
+}
+window._renderAnswerPanel=renderAnswerPanel;
+
+function renderAnswerPanel(){
+  const g=activeAnswerGame;
+  const isOpen=answerRoundOpen[g];
+  const isRevealed=answerRevealed[g];
+  const answers=window._allAnswers[g]||{};
+  const box=document.getElementById('answerPanelBox');
+  box.innerHTML=`
+    <div class="answer-panel-title">
+      ${g}
+      <span class="answer-status-badge ${isOpen?'open':''}">${isOpen?'● 作答中':isRevealed?'✓ 已公布':'待開放'}</span>
+    </div>
+    <div style="margin-bottom:14px;">
+      <input class="correct-answer-input" id="correctAnswerInput" placeholder="輸入正確答案（方便對照）" value="${answerRevealed[g]||''}">
+    </div>
+    <div class="ctrl-row">
+      <button class="answer-open-btn" onclick="toggleAnswerRound('${g}')">${isOpen?'⏸ 關閉作答':'▶ 開放作答'}</button>
+      <button class="answer-reveal-btn" onclick="revealAnswers('${g}')" ${!isOpen&&!Object.keys(answers).length?'disabled':''}>👁 公布答案</button>
+    </div>
+    <div class="answers-grid">
+      ${PLAYERS.map(p=>{
+        const a=answers[p.id];
+        return `<div class="answer-card ${a?'has-answer':''}">
+          <div class="answer-card-name" style="color:${p.color}">${p.name}</div>
+          ${a?`<div class="answer-card-text ${isRevealed?'':'hidden'}">${a.answer||''}</div>`:
+          `<div class="answer-card-waiting">⏳ 等待中</div>`}
+        </div>`;
+      }).join('')}
+    </div>`;
+}
+
+window.selectAnswerGame=function(g){activeAnswerGame=g;renderAnswerTabs();};
+
+window.toggleAnswerRound=function(g){
+  answerRoundOpen[g]=!answerRoundOpen[g];
+  if(answerRoundOpen[g])answerRevealed[g]=false;
+  if(window._pushAnswerState)window._pushAnswerState(g,{open:answerRoundOpen[g],revealed:false,ts:Date.now()});
+  renderAnswerPanel();
+  toast(answerRoundOpen[g]?`${g} 作答開放！`:`${g} 作答已關閉`);
+};
+
+window.revealAnswers=function(g){
+  answerRevealed[g]=true;
+  answerRoundOpen[g]=false;
+  const correctAnswer=document.getElementById('correctAnswerInput')?.value||'';
+  if(window._pushAnswerState)window._pushAnswerState(g,{open:false,revealed:true,correctAnswer,ts:Date.now()});
+  renderAnswerPanel();
+  toast(`${g} 答案已公布！`);
+};
+
+// MISSION
 function renderDrawSelect(){
   document.getElementById('drawSelect').innerHTML='<option value="">— 選擇玩家 —</option>'+
     PLAYERS.filter(p=>!(p.id in missionAssigned)).map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
 }
-
 window.drawMission=function(){
   const sel=document.getElementById('drawSelect');
   const pid=parseInt(sel.value);
@@ -413,36 +505,30 @@ window.drawMission=function(){
   document.getElementById('drawBtn').disabled=true;
   renderDrawSelect();renderMissionStatus();pushState();
 };
-
 window.confirmMission=function(){
   document.getElementById('missionReveal').style.display='none';
   document.getElementById('drawBtn').disabled=false;
   document.getElementById('drawSelect').value='';
   toast('已確認，螢幕已清除 ✓');
 };
-
 window.completeMission=function(pid){
   if(missionDone[pid]||missionFailed[pid])return;
   missionDone[pid]=true;
   const isFirst=Object.keys(missionDone).length===1;
   renderMissionStatus();renderScoreGrid();
-  toast(isFirst?`🎉 ${PLAYERS[pid].name} 第一個完成！神秘禮物！`:`✅ ${PLAYERS[pid].name} 完成秘密任務！`);
+  toast(isFirst?`🎉 ${PLAYERS[pid].name} 第一個完成！神秘禮物！`:`✅ ${PLAYERS[pid].name} 完成任務！`);
   pushState();
 };
-
 window.failMission=function(pid){
   if(missionDone[pid]||missionFailed[pid])return;
   missionFailed[pid]=true;
   renderMissionStatus();renderScoreGrid();
-  toast(`❌ ${PLAYERS[pid].name} 的任務被發現了！`);
+  toast(`❌ ${PLAYERS[pid].name} 的任務被發現！`);
   pushState();
 };
-
 function renderMissionStatus(){
   document.getElementById('missionStatusList').innerHTML=PLAYERS.map(p=>{
-    const drawn=p.id in missionAssigned;
-    const done=missionDone[p.id];
-    const failed=missionFailed[p.id];
+    const drawn=p.id in missionAssigned,done=missionDone[p.id],failed=missionFailed[p.id];
     const dc=done?'done':failed?'failed':drawn?'drawn':'';
     const st=done?'✅ 完成':failed?'❌ 被發現':drawn?'🎲 已抽到':'⏳ 未抽';
     const btns=drawn&&!done&&!failed?`<div class="mbtns"><button class="mcbtn" onclick="completeMission(${p.id})">完成</button><button class="mfbtn" onclick="failMission(${p.id})">被發現</button></div>`:'';
@@ -450,12 +536,12 @@ function renderMissionStatus(){
   }).join('');
 }
 
+// GROUP
 function renderGroup(){
   const assigned=[...teamA,...teamB];
   const unassigned=PLAYERS.filter(p=>!assigned.includes(p.id));
   document.getElementById('unassignedChips').innerHTML=unassigned.map(p=>
-    `<div class="uchip" style="border-color:${p.color};color:${p.color}" onclick="assignTeam(${p.id})">${p.name}</div>`
-  ).join('');
+    `<div class="uchip" style="border-color:${p.color};color:${p.color}" onclick="assignTeam(${p.id})">${p.name}</div>`).join('');
   document.getElementById('teamAMembers').innerHTML=teamA.map(id=>{const p=PLAYERS[id];return`<div class="tmc in-a" onclick="removeFromTeam(${id},'A')">${p.name} ✕</div>`;}).join('');
   document.getElementById('teamBMembers').innerHTML=teamB.map(id=>{const p=PLAYERS[id];return`<div class="tmc in-b" onclick="removeFromTeam(${id},'B')">${p.name} ✕</div>`;}).join('');
 }
@@ -477,54 +563,38 @@ function renderIce(){
     </div>`).join('');
 }
 
+// AWARD
 window.showAward=function(){
   const sorted=PLAYERS.map(p=>({...p,score:totalScore(p.id)})).sort((a,b)=>b.score-a.score);
   const top3=sorted.slice(0,3);
-  const order=[1,0,2];
-  const medals=['🥇','🥈','🥉'];
-  const barCls=['first','second','third'];
+  const order=[1,0,2];const medals=['🥇','🥈','🥉'];const barCls=['first','second','third'];
   document.getElementById('awardPodium').innerHTML=order.map(i=>{
     const p=top3[i];if(!p)return'';
-    return`<div class="podium-item">
-      <div class="podium-medal">${medals[i]}</div>
+    return`<div class="podium-item"><div class="podium-medal">${medals[i]}</div>
       <div class="podium-avatar" style="background:${p.color}33;border-color:${p.color};color:${p.color}">${p.name.slice(0,2)}</div>
-      <div class="podium-name">${p.name}</div>
-      <div class="podium-score">${p.score}分</div>
-      <div class="podium-bar ${barCls[i]}"></div>
-    </div>`;
+      <div class="podium-name">${p.name}</div><div class="podium-score">${p.score}分</div>
+      <div class="podium-bar ${barCls[i]}"></div></div>`;
   }).join('');
-  document.getElementById('awardOverlay').classList.add('show');
-  startConfetti();
+  document.getElementById('awardOverlay').classList.add('show');startConfetti();
 };
 window.closeAward=function(){document.getElementById('awardOverlay').classList.remove('show');stopConfetti();};
 
 let confettiAnim;
 function startConfetti(){
-  const canvas=document.getElementById('confettiCanvas');
-  const ctx=canvas.getContext('2d');
+  const canvas=document.getElementById('confettiCanvas');const ctx=canvas.getContext('2d');
   canvas.width=window.innerWidth;canvas.height=window.innerHeight;
-  const pieces=Array.from({length:120},()=>({
-    x:Math.random()*canvas.width,y:Math.random()*canvas.height-canvas.height,
-    r:Math.random()*8+4,color:['#c050ff','#ff40cc','#ffcc00','#00f0c8','#ff8040','#80aaff'][Math.floor(Math.random()*6)],
-    speed:Math.random()*3+1,wobble:Math.random()*2-1,angle:Math.random()*360
-  }));
-  function draw(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    pieces.forEach(p=>{p.y+=p.speed;p.x+=p.wobble;p.angle+=3;if(p.y>canvas.height){p.y=-10;p.x=Math.random()*canvas.width;}
-    ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.angle*Math.PI/180);ctx.fillStyle=p.color;ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r);ctx.restore();});
-    confettiAnim=requestAnimationFrame(draw);
-  }
+  const pieces=Array.from({length:120},()=>({x:Math.random()*canvas.width,y:Math.random()*canvas.height-canvas.height,r:Math.random()*8+4,color:['#c050ff','#ff40cc','#ffcc00','#00f0c8','#ff8040','#80aaff'][Math.floor(Math.random()*6)],speed:Math.random()*3+1,wobble:Math.random()*2-1,angle:Math.random()*360}));
+  function draw(){ctx.clearRect(0,0,canvas.width,canvas.height);pieces.forEach(p=>{p.y+=p.speed;p.x+=p.wobble;p.angle+=3;if(p.y>canvas.height){p.y=-10;p.x=Math.random()*canvas.width;}ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.angle*Math.PI/180);ctx.fillStyle=p.color;ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r);ctx.restore();});confettiAnim=requestAnimationFrame(draw);}
   draw();
 }
 function stopConfetti(){cancelAnimationFrame(confettiAnim);const c=document.getElementById('confettiCanvas');c.getContext('2d').clearRect(0,0,c.width,c.height);}
 
+// TIMER
 let timerVal=30,timerRunning=false,timerInterval=null;
 window.timerToggle=function(){
   if(timerRunning){clearInterval(timerInterval);timerRunning=false;document.getElementById('timerStartBtn').textContent='▶ 繼續';}
   else{timerRunning=true;document.getElementById('timerStartBtn').textContent='⏸ 暫停';
-    timerInterval=setInterval(()=>{timerVal--;updateTimerDisplay();
-      if(timerVal<=0){clearInterval(timerInterval);timerRunning=false;document.getElementById('timerStartBtn').textContent='▶ 重新開始';playTimeUpSound();toast('⏰ 時間到！');}
-    },1000);}
+    timerInterval=setInterval(()=>{timerVal--;updateTimerDisplay();if(timerVal<=0){clearInterval(timerInterval);timerRunning=false;document.getElementById('timerStartBtn').textContent='▶ 重新開始';playTimeUpSound();toast('⏰ 時間到！');}},1000);}
 };
 window.timerReset=function(s){clearInterval(timerInterval);timerRunning=false;timerVal=s;document.getElementById('timerStartBtn').textContent='▶ 開始';updateTimerDisplay();};
 function updateTimerDisplay(){const el=document.getElementById('timerDisplay');const m=Math.floor(timerVal/60),s=timerVal%60;el.textContent=m>0?`${m}:${String(s).padStart(2,'0')}`:String(timerVal);el.className='timer-display'+(timerVal<=10&&timerVal>0?' warning':'');}
@@ -532,7 +602,6 @@ function playTimeUpSound(){try{const ctx=new(window.AudioContext||window.webkitA
 
 function toast(msg){const wrap=document.getElementById('toastWrap');const el=document.createElement('div');el.className='toast';el.textContent=msg;wrap.appendChild(el);setTimeout(()=>el.remove(),3000);}
 
-// logo fallback
 document.getElementById('logoImg').onerror=function(){this.style.display='none';document.getElementById('fallbackTitle').style.display='block';};
 
 renderScoreGrid();renderLeaderboard();renderDrawSelect();renderMissionStatus();
