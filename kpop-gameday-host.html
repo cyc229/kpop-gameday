@@ -184,6 +184,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <button class="nav-btn" onclick="switchTab('group',this)">👥 團體遊戲</button>
     <button class="nav-btn" onclick="showAward()">🎖 頒獎</button>
     <button class="reset-btn" onclick="resetPlayers()">🔄 重置玩家</button>
+    <button class="reset-btn" style="border-color:var(--yellow);color:var(--yellow)" onclick="resetAll()">⚠️ 全場重置</button>
   </div>
   <div class="timer-bar">
     <div class="timer-display" id="timerDisplay">30</div>
@@ -318,10 +319,22 @@ window._pushState=function(){
 };
 window._pushAnswerState=function(game,qNum,state){set(ref(db,`answerRound/${game}/${qNum}`),state);};
 window._resetPlayers=function(){remove(ref(db,'players'));remove(ref(db,'online'));};
+window._resetAll=function(){remove(ref(db,'players'));remove(ref(db,'online'));remove(ref(db,'gameState'));remove(ref(db,'answers'));remove(ref(db,'answerRound'));remove(ref(db,'groupState'));};
 onValue(ref(db,'answers'),snap=>{window._allAnswers=snap.exists()?snap.val():{};if(document.getElementById('panel-answers').classList.contains('active'))window._renderAnswerPanel&&window._renderAnswerPanel();});
 onValue(ref(db,'players'),snap=>{
   if(snap.exists()){const data=snap.val();Object.values(data).forEach(p=>{const f=window._PLAYERS.find(x=>x.id===p.id);if(f){f.name=p.name;f.color=p.color;}});
   window._renderScoreGrid&&window._renderScoreGrid();window._renderLeaderboard&&window._renderLeaderboard();window._renderMissionStatus&&window._renderMissionStatus();}
+});
+onValue(ref(db,'groupState'),snap=>{
+  if(!snap.exists())return;
+  const gs=snap.val();
+  const nd={A:[],B:[]};
+  if(gs['跳舞接龍']){Object.entries(gs['跳舞接龍']).forEach(([pid,team])=>{if(nd[team])nd[team].push(parseInt(pid));});}
+  window._danceTeams=nd;
+  const nw={A:[],B:[],C:[]};
+  if(gs['詞語接龍']){Object.entries(gs['詞語接龍']).forEach(([pid,team])=>{if(nw[team])nw[team].push(parseInt(pid));});}
+  window._wordTeams=nw;
+  if(document.getElementById('panel-group')&&document.getElementById('panel-group').classList.contains('active'))window._renderGroup&&window._renderGroup();
 });
 </script>
 
@@ -574,8 +587,12 @@ function switchGroupTab(tab,btn){
 window.switchGroupTab=switchGroupTab;
 
 function renderGroup(){
+  // merge Firebase synced teams with local
+  if(window._danceTeams){danceTeams=window._danceTeams;}
+  if(window._wordTeams){wordTeams=window._wordTeams;}
   renderDanceGroup();renderWordGroup();
 }
+window._renderGroup=renderGroup;
 
 function renderDanceGroup(){
   const assigned=[...danceTeams.A,...danceTeams.B];
@@ -634,6 +651,19 @@ window.resetPlayers=function(){
   if(!confirm('確定要重置所有玩家登入狀態嗎？'))return;
   if(window._resetPlayers)window._resetPlayers();
   toast('✅ 玩家已重置！');
+};
+window.resetAll=function(){
+  if(!confirm('⚠️ 確定要全場重置？所有分數、任務、答題記錄都會清空！'))return;
+  if(window._resetAll)window._resetAll();
+  gameScores={};PLAYERS.forEach(p=>{gameScores[p.id]={};GAMES.forEach(g=>{gameScores[p.id][g]=0;});});
+  window._gameScores=gameScores;
+  missionAssigned={};missionDone={};missionFailed={};availableMissions=[...MISSIONS];
+  window._missionAssigned=missionAssigned;window._missionDone=missionDone;window._missionFailed=missionFailed;
+  Object.keys(ANSWER_GAMES).forEach(g=>{answerQNum[g]=1;answerOpen[g]=false;answerRevealed[g]=false;});
+  danceTeams={A:[],B:[]};danceScores={A:0,B:0};
+  wordTeams={A:[],B:[],C:[]};wordScores={A:0,B:0,C:0};
+  renderScoreGrid();renderLeaderboard();renderBreakdown();renderDrawSelect();renderMissionStatus();
+  toast('✅ 全場已重置！');
 };
 
 // AWARD - reveal one by one

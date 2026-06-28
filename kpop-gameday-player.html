@@ -15,15 +15,14 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .header img{height:65px;object-fit:contain;filter:drop-shadow(0 0 16px rgba(200,80,255,0.6));}
 .header-title{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:4px;background:linear-gradient(135deg,#c050ff,#ff40cc,#ffcc00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:none;}
 .header-sub{font-size:11px;color:var(--muted);letter-spacing:4px;margin-top:4px;text-transform:uppercase;}
-/* LOGIN */
 .login-box{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:24px;}
 .login-title{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:3px;color:var(--purple);margin-bottom:6px;text-align:center;}
 .login-sub{font-size:12px;color:var(--muted);margin-bottom:18px;text-align:center;}
 .step-label{font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:3px;color:var(--muted);margin-bottom:8px;}
 .ps-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:18px;}
-.ps-btn{padding:11px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface2);color:var(--white);font-family:'Noto Sans TC',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s;}
+.ps-btn{padding:11px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface2);color:var(--white);font-family:'Noto Sans TC',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s;text-align:center;}
 .ps-btn:hover{border-color:var(--purple);}
-.ps-btn.selected{border-color:var(--purple);background:rgba(200,80,255,0.15);}
+.ps-btn.selected{border-color:var(--purple);background:rgba(200,80,255,0.15);color:var(--purple);}
 .ps-btn.taken{opacity:0.25;cursor:not-allowed;pointer-events:none;}
 .name-input{width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface2);color:var(--white);font-family:'Noto Sans TC',sans-serif;font-size:14px;margin-bottom:14px;outline:none;}
 .name-input:focus{border-color:var(--purple);}
@@ -36,21 +35,18 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .login-btn{width:100%;padding:13px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--purple),var(--pink));color:white;font-family:'Noto Sans TC',sans-serif;font-size:15px;font-weight:900;cursor:pointer;letter-spacing:2px;transition:all 0.2s;box-shadow:0 4px 16px rgba(200,80,255,0.3);}
 .login-btn:hover{transform:translateY(-2px);}
 .login-btn:disabled{opacity:0.4;cursor:not-allowed;transform:none;}
-/* MAIN */
 .player-header{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px;text-align:center;margin-bottom:14px;}
 .ph-name{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:2px;}
 .ph-score{font-family:'Bebas Neue',sans-serif;font-size:60px;line-height:1;margin:4px 0;}
 .ph-label{font-size:10px;color:var(--muted);letter-spacing:3px;text-transform:uppercase;}
 .card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:12px;}
 .section-title{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:4px;color:var(--muted);margin-bottom:10px;}
-/* MISSION */
 .mission-box{background:var(--surface2);border:1.5px solid var(--purple);border-radius:var(--radius);padding:18px;}
 .mission-label{font-size:10px;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;text-align:center;}
 .mission-text{font-size:16px;font-weight:900;color:var(--yellow);line-height:1.5;margin-bottom:12px;padding:12px;background:rgba(255,204,0,0.07);border-radius:10px;border:1px solid rgba(255,204,0,0.2);text-align:center;}
-.mission-rules{font-size:11px;color:var(--muted);line-height:1.8;padding:10px;background:rgba(255,255,255,0.03);border-radius:8px;border:1px solid rgba(255,255,255,0.06);}
+.mission-rules{font-size:11px;color:var(--muted);line-height:1.9;padding:10px;background:rgba(255,255,255,0.03);border-radius:8px;border:1px solid rgba(255,255,255,0.06);}
 .mission-rules span{color:var(--white);}
 .mission-waiting{font-size:14px;color:var(--muted);line-height:1.7;text-align:center;}
-/* ANSWER */
 .answer-box{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:12px;}
 .answer-game-name{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:3px;color:var(--purple);margin-bottom:4px;}
 .answer-q-label{font-size:12px;color:var(--muted);margin-bottom:10px;}
@@ -66,19 +62,16 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .reveal-row.me{border:1px solid var(--purple);}
 .rr-name{font-size:12px;font-weight:700;width:60px;flex-shrink:0;}
 .rr-answer{font-size:13px;font-weight:900;flex:1;}
-/* SCORE LIST */
 .score-list{display:flex;flex-direction:column;gap:5px;}
 .sl-row{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:8px;background:var(--surface2);}
 .sl-row.me{border:1.5px solid var(--purple);background:rgba(200,80,255,0.1);}
 .sl-rank{font-family:'Bebas Neue',sans-serif;font-size:18px;width:22px;}
 .sl-name{font-size:13px;font-weight:700;flex:1;}
 .sl-score{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--yellow);}
-/* GROUP JOIN */
-.join-group-box{background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px;}
+.join-group-box{background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;}
 .join-title{font-size:13px;font-weight:700;margin-bottom:10px;color:var(--muted);}
 .join-btns{display:flex;gap:8px;flex-wrap:wrap;}
 .join-btn{padding:10px 18px;border-radius:10px;border:1.5px solid var(--border);background:transparent;color:var(--white);font-family:'Noto Sans TC',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;}
-.join-btn.joined{border-color:currentColor;}
 .join-btn:hover{border-color:var(--purple);}
 .toast-wrap{position:fixed;bottom:20px;right:20px;z-index:999;display:flex;flex-direction:column;gap:7px;}
 .toast{background:var(--surface2);border:1.5px solid var(--purple);border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;color:var(--white);box-shadow:0 8px 20px rgba(0,0,0,0.4);animation:slideIn 0.3s ease;max-width:260px;}
@@ -96,12 +89,12 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   <div id="loginSection">
     <div class="login-box">
       <div class="login-title">加入遊戲</div>
-      <div class="login-sub">選擇你是誰，自訂名稱和顏色</div>
-      <div class="step-label">STEP 1 — 選擇你是誰</div>
+      <div class="login-sub">選擇你的玩家編號，再輸入名字和顏色</div>
+      <div class="step-label">STEP 1 — 選擇玩家編號</div>
       <div class="ps-grid" id="psGrid"></div>
       <div id="customizeSection" style="display:none">
-        <div class="step-label">STEP 2 — 修改名稱（可選）</div>
-        <input class="name-input" id="nameInput" placeholder="輸入你想顯示的名稱">
+        <div class="step-label">STEP 2 — 輸入你的名字</div>
+        <input class="name-input" id="nameInput" placeholder="輸入你的名字或暱稱" maxlength="10">
         <div class="step-label">STEP 3 — 選擇你的顏色</div>
         <div class="color-grid" id="colorGrid"></div>
       </div>
@@ -121,6 +114,12 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <div class="section-title">🕵️ 我的秘密任務</div>
       <div class="mission-box" id="missionBox">
         <div class="mission-waiting">等待抽籤中⋯<br><span style="font-size:11px;opacity:0.6">走到主持人那裡抽取你的任務</span></div>
+        <div class="mission-rules" style="margin-top:12px">
+          📌 完成後向主持人宣告<br>
+          <span>完成任務：+3 分</span><br>
+          <span>第一個完成：額外 +1 分 + 神秘禮物 🎁</span><br>
+          <span>被發現：0 分</span>
+        </div>
       </div>
     </div>
 
@@ -144,54 +143,68 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/fireba
 import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-database.js";
 const fc={apiKey:"AIzaSyCxooQDoIoUTzLXXmJ33_woXAQ2eP2UYrQ",authDomain:"kpop-gameday.firebaseapp.com",databaseURL:"https://kpop-gameday-default-rtdb.firebaseio.com",projectId:"kpop-gameday",storageBucket:"kpop-gameday.firebasestorage.app",messagingSenderId:"993002749510",appId:"1:993002749510:web:020c1121f4ba3f95395447"};
 const app=initializeApp(fc);const db=getDatabase(app);
-
 onValue(ref(db,'gameState'),snap=>{window._gs=snap.exists()?snap.val():{};if(window._myId!==undefined)updateMain();});
 onValue(ref(db,'answerRound'),snap=>{window._rounds=snap.exists()?snap.val():{};if(window._myId!==undefined)renderAnswers();});
 onValue(ref(db,'answers'),snap=>{window._allAnswers=snap.exists()?snap.val():{};if(window._myId!==undefined)renderAnswers();});
-onValue(ref(db,'players'),snap=>{window._onlineData=snap.exists()?snap.val():{};renderPsGrid();});
+onValue(ref(db,'players'),snap=>{
+  window._onlineData=snap.exists()?snap.val():{};
+  renderPsGrid();
+  if(window._myId!==undefined){updateMain();}
+  // auto-restore login from localStorage
+  const saved=localStorage.getItem('kpgd_player');
+  if(saved&&window._myId===undefined){
+    try{
+      const s=JSON.parse(saved);
+      const existing=window._onlineData[s.id];
+      if(existing){
+        window._myId=s.id;window._myName=existing.name;window._myColor=existing.color;
+        document.getElementById('loginSection').style.display='none';
+        document.getElementById('mainSection').style.display='block';
+        document.getElementById('phName').textContent=existing.name;
+        document.getElementById('phName').style.color=existing.color;
+        document.getElementById('phScore').style.color=existing.color;
+        updateMain();renderAnswers();renderGroupSection();
+      }
+    }catch(e){}
+  }
+});
 onValue(ref(db,'groupState'),snap=>{window._groupState=snap.exists()?snap.val():{};if(window._myId!==undefined)renderGroupSection();});
-
 window._submitAnswer=function(game,qNum,pid,answer){set(ref(db,`answers/${game}/${qNum}/${pid}`),{answer,ts:Date.now()});};
 window._registerPlayer=function(pid,name,color){set(ref(db,`players/${pid}`),{id:pid,name,color,ts:Date.now()});};
 window._joinGroup=function(game,team,pid){set(ref(db,`groupState/${game}/${pid}`),team);};
 </script>
 
 <script>
-const DP=[
-  {id:0,name:'李明翰',color:'#c050ff'},{id:1,name:'葵',color:'#ff50aa'},
-  {id:2,name:'蒲姿羽',color:'#00d4ff'},{id:3,name:'莊子萱',color:'#ffe000'},
-  {id:4,name:'簡',color:'#ff8040'},{id:5,name:'Huan',color:'#40e090'},
-  {id:6,name:'酥函',color:'#ff4060'},{id:7,name:'Mio',color:'#80aaff'},
-  {id:8,name:'美嘉',color:'#ff80cc'}
-];
+const SLOT_NAMES=['玩家一','玩家二','玩家三','玩家四','玩家五','玩家六','玩家七','玩家八','玩家九'];
 const COLORS=['#c050ff','#ff40cc','#ff4060','#ff8040','#ffe000','#40e090','#00d4ff','#80aaff','#ff80cc','#00f0c8'];
 const ANSWER_GAMES=['Emoji猜歌','韓文翻中文','混音猜歌'];
+const TEAM_COLORS={A:'#ff80cc',B:'#80aaff',C:'#40e090'};
 
-window._myId=undefined;window._myColor='#c050ff';window._myName='';
+window._myId=undefined;window._myColor=COLORS[0];window._myName='';
 window._gs={};window._rounds={};window._allAnswers={};window._onlineData={};window._groupState={};
-let selectedId=null,selectedColor=null;
-let submittedAnswers={};
+let selectedId=null,selectedColor=null,submittedAnswers={};
 
-function getP(id){const od=window._onlineData[id];return od?od:DP[id]||DP[0];}
+function getTakenIds(){return Object.keys(window._onlineData).map(Number);}
 function getTakenColors(){return Object.values(window._onlineData).filter(p=>p.id!==selectedId).map(p=>p.color);}
-function getTakenIds(){return Object.values(window._onlineData).map(p=>p.id);}
+function getPlayerInfo(id){return window._onlineData[id]||{id,name:SLOT_NAMES[id],color:COLORS[id%COLORS.length]};}
 
 function renderPsGrid(){
   const taken=getTakenIds();
-  document.getElementById('psGrid').innerHTML=DP.map(p=>{
-    const isTaken=taken.includes(p.id)&&p.id!==selectedId;
-    return`<button class="ps-btn ${isTaken?'taken':''} ${selectedId===p.id?'selected':''}"
-      style="${selectedId===p.id?'border-color:'+window._myColor+';color:'+window._myColor:''}"
-      onclick="selectP(${p.id})">${p.name}</button>`;
+  document.getElementById('psGrid').innerHTML=SLOT_NAMES.map((name,i)=>{
+    const isTaken=taken.includes(i)&&i!==selectedId;
+    const isSelected=selectedId===i;
+    return`<button class="ps-btn ${isTaken?'taken':''} ${isSelected?'selected':''}"
+      onclick="selectSlot(${i})">${name}</button>`;
   }).join('');
 }
 
-window.selectP=function(id){
+window.selectSlot=function(id){
   selectedId=id;
-  const od=window._onlineData[id];
-  document.getElementById('nameInput').value=od?od.name:DP[id].name;
-  selectedColor=od?od.color:DP[id].color;
+  const existing=window._onlineData[id];
+  selectedColor=existing?existing.color:COLORS[id%COLORS.length];
   window._myColor=selectedColor;
+  document.getElementById('nameInput').value='';
+  document.getElementById('nameInput').placeholder=`輸入你的名字（${SLOT_NAMES[id]}）`;
   document.getElementById('customizeSection').style.display='block';
   document.getElementById('loginBtn').disabled=false;
   renderPsGrid();renderColorGrid();
@@ -205,28 +218,33 @@ function renderColorGrid(){
       style="background:${c}" onclick="selectColor('${c}')"></div>`;
   }).join('');
 }
-window.selectColor=function(c){selectedColor=c;window._myColor=c;renderColorGrid();renderPsGrid();};
+window.selectColor=function(c){selectedColor=c;window._myColor=c;renderColorGrid();};
 
 window.doLogin=function(){
   if(selectedId===null)return;
-  const name=document.getElementById('nameInput').value.trim()||DP[selectedId].name;
-  window._myId=selectedId;window._myName=name;window._myColor=selectedColor||DP[selectedId].color;
+  const name=document.getElementById('nameInput').value.trim();
+  if(!name){toast('請輸入你的名字！');return;}
+  window._myId=selectedId;window._myName=name;window._myColor=selectedColor||COLORS[selectedId%COLORS.length];
   if(window._registerPlayer)window._registerPlayer(selectedId,name,window._myColor);
+  localStorage.setItem('kpgd_player',JSON.stringify({id:selectedId}));
   document.getElementById('loginSection').style.display='none';
   document.getElementById('mainSection').style.display='block';
-  document.getElementById('phName').textContent=window._myName;
+  document.getElementById('phName').textContent=name;
   document.getElementById('phName').style.color=window._myColor;
   document.getElementById('phScore').style.color=window._myColor;
   if(window._gs)updateMain();
   renderAnswers();renderGroupSection();
-  toast(`歡迎 ${window._myName}！準備好了嗎 🎤`);
+  toast(`歡迎 ${name}！準備好了嗎 🎤`);
 };
 
 function updateMain(){
   const pid=window._myId;if(pid===undefined)return;
   const scores=window._gs.scores||{};
   document.getElementById('phScore').textContent=scores[pid]||0;
-  const sorted=DP.map(p=>({...getP(p.id),id:p.id,score:scores[p.id]||0})).sort((a,b)=>b.score-a.score);
+  const sorted=SLOT_NAMES.map((n,i)=>{
+    const info=getPlayerInfo(i);
+    return{id:i,name:info.name||n,color:info.color||COLORS[i%COLORS.length],score:scores[i]||0};
+  }).filter(p=>window._onlineData[p.id]).sort((a,b)=>b.score-a.score);
   const medals=['🥇','🥈','🥉'];
   document.getElementById('scoreList').innerHTML=sorted.map((p,i)=>`
     <div class="sl-row ${p.id===pid?'me':''}">
@@ -234,38 +252,28 @@ function updateMain(){
       <div class="sl-name" style="color:${p.color}">${p.name}${p.id===pid?' (我)':''}</div>
       <div class="sl-score">${p.score}</div>
     </div>`).join('');
-  // mission
   const assigned=window._gs.missionAssigned||{};
   const done=window._gs.missionDone||{};
   const failed=window._gs.missionFailed||{};
   const mbox=document.getElementById('missionBox');
+  const rules=`<div class="mission-rules" style="margin-top:12px">
+    📌 完成後向主持人宣告<br>
+    <span>完成任務：+3 分</span><br>
+    <span>第一個完成：額外 +1 分 + 神秘禮物 🎁</span><br>
+    <span>被發現：0 分</span>
+  </div>`;
   if(assigned[pid]){
     const stateLabel=done[pid]?'<div style="color:var(--teal);font-size:13px;margin-top:8px;text-align:center">✅ 任務完成！</div>':failed[pid]?'<div style="color:var(--pink);font-size:13px;margin-top:8px;text-align:center">❌ 任務失敗</div>':'';
-    mbox.innerHTML=`
-      <div class="mission-label">你的秘密任務</div>
-      <div class="mission-text">${assigned[pid]}</div>
-      ${stateLabel}
-      <div class="mission-rules">
-        📌 完成後向主持人宣告<br>
-        <span>完成任務：+3 分</span><br>
-        <span>第一個完成：額外 +1 分 + 神秘禮物 🎁</span><br>
-        <span>被發現：0 分</span>
-      </div>`;
+    mbox.innerHTML=`<div class="mission-label">你的秘密任務</div>
+      <div class="mission-text">${assigned[pid]}</div>${stateLabel}${rules}`;
   } else {
-    mbox.innerHTML=`<div class="mission-waiting">等待抽籤中⋯<br><span style="font-size:11px;opacity:0.6">走到主持人那裡抽取你的任務</span></div>
-    <div class="mission-rules" style="margin-top:12px">
-      📌 完成後向主持人宣告<br>
-      <span>完成任務：+3 分</span><br>
-      <span>第一個完成：額外 +1 分 + 神秘禮物 🎁</span><br>
-      <span>被發現：0 分</span>
-    </div>`;
+    mbox.innerHTML=`<div class="mission-waiting">等待抽籤中⋯<br><span style="font-size:11px;opacity:0.6">走到主持人那裡抽取你的任務</span></div>${rules}`;
   }
 }
 
 function renderAnswers(){
   const pid=window._myId;if(pid===undefined)return;
-  const rounds=window._rounds||{};
-  const allAnswers=window._allAnswers||{};
+  const rounds=window._rounds||{};const allAnswers=window._allAnswers||{};
   let html='';
   ANSWER_GAMES.forEach(g=>{
     const gameRounds=rounds[g]||{};
@@ -275,19 +283,19 @@ function renderAnswers(){
     const round=gameRounds[latestQ]||{};
     const isOpen=round.open;const isRevealed=round.revealed;
     if(!isOpen&&!isRevealed)return;
-    const myAnswer=(allAnswers[g]&&allAnswers[g][latestQ])?allAnswers[g][latestQ][pid]:null;
+    const myAnswer=allAnswers[g]&&allAnswers[g][latestQ]?allAnswers[g][latestQ][pid]:null;
     const submitted=submittedAnswers[`${g}_${latestQ}`];
     html+=`<div class="answer-box">
       <div class="answer-game-name">${g}</div>
       <div class="answer-q-label">第 ${latestQ} 題</div>`;
     if(isRevealed){
       if(round.correctAnswer)html+=`<div class="correct-banner">✅ 正確答案：${round.correctAnswer}</div>`;
+      const onlinePlayers=Object.values(window._onlineData).sort((a,b)=>a.id-b.id);
       html+=`<div class="reveal-list">`;
-      DP.forEach(p=>{
-        const pInfo=getP(p.id);
+      onlinePlayers.forEach(p=>{
         const a=allAnswers[g]&&allAnswers[g][latestQ]?allAnswers[g][latestQ][p.id]:null;
         html+=`<div class="reveal-row ${p.id===pid?'me':''}">
-          <div class="rr-name" style="color:${pInfo.color}">${pInfo.name}</div>
+          <div class="rr-name" style="color:${p.color}">${p.name}</div>
           <div class="rr-answer">${a?a.answer:'—'}</div>
         </div>`;
       });
@@ -317,23 +325,21 @@ window.submitA=function(game,qNum){
 };
 
 function renderGroupSection(){
-  // for now just show dance and word join buttons
   const pid=window._myId;if(pid===undefined)return;
   const gs=window._groupState||{};
   const danceTeam=gs['跳舞接龍']?gs['跳舞接龍'][pid]:null;
   const wordTeam=gs['詞語接龍']?gs['詞語接龍'][pid]:null;
-  const teamColors={A:'#ff80cc',B:'#80aaff',C:'#40e090'};
   let html=`
-    <div class="join-group-box" style="margin-bottom:10px">
+    <div class="join-group-box">
       <div class="join-title">💃 跳舞接龍 — 選擇隊伍</div>
       <div class="join-btns">
-        ${['A','B'].map(t=>`<button class="join-btn ${danceTeam===t?'joined':''}" style="color:${teamColors[t]};border-color:${danceTeam===t?teamColors[t]:'rgba(180,80,255,0.3)'}" onclick="joinGroup('跳舞接龍','${t}')">${danceTeam===t?'✓ ':''} ${t} 隊</button>`).join('')}
+        ${['A','B'].map(t=>`<button class="join-btn" style="color:${TEAM_COLORS[t]};border-color:${danceTeam===t?TEAM_COLORS[t]:'rgba(180,80,255,0.3)'};background:${danceTeam===t?TEAM_COLORS[t]+'22':'transparent'}" onclick="joinGroup('跳舞接龍','${t}')">${danceTeam===t?'✓ ':''} ${t} 隊</button>`).join('')}
       </div>
     </div>
     <div class="join-group-box">
       <div class="join-title">📝 詞語接龍 — 選擇組別</div>
       <div class="join-btns">
-        ${['A','B','C'].map(t=>`<button class="join-btn ${wordTeam===t?'joined':''}" style="color:${teamColors[t]};border-color:${wordTeam===t?teamColors[t]:'rgba(180,80,255,0.3)'}" onclick="joinGroup('詞語接龍','${t}')">${wordTeam===t?'✓ ':''} ${t} 組</button>`).join('')}
+        ${['A','B','C'].map(t=>`<button class="join-btn" style="color:${TEAM_COLORS[t]};border-color:${wordTeam===t?TEAM_COLORS[t]:'rgba(180,80,255,0.3)'};background:${wordTeam===t?TEAM_COLORS[t]+'22':'transparent'}" onclick="joinGroup('詞語接龍','${t}')">${wordTeam===t?'✓ ':''} ${t} 組</button>`).join('')}
       </div>
     </div>`;
   document.getElementById('groupContent').innerHTML=html;
