@@ -253,8 +253,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <div class="team-grid-2" id="danceTeams"></div>
         <div class="dance-score-row">
           <span style="font-size:12px;color:var(--muted)">猜中歌曲：</span>
-          <button class="tbtn" onclick="danceCorrect('A')">A隊猜中 +1</button>
-          <button class="tbtn" onclick="danceCorrect('B')">B隊猜中 +1</button>
+          <button class="tbtn" onclick="danceCorrect('A',1)">A隊 團+歌 +1</button>
+          <button class="tbtn" onclick="danceCorrect('A',0.5)">A隊 其中一項 +0.5</button>
+          <button class="tbtn" onclick="danceCorrect('B',1)">B隊 團+歌 +1</button>
+          <button class="tbtn" onclick="danceCorrect('B',0.5)">B隊 其中一項 +0.5</button>
           <button class="tbtn primary" onclick="danceFinish()">🏁 結算 高分隊全員+3</button>
         </div>
         <button class="tbtn" style="width:100%;margin-top:8px;" onclick="resetDance()">🔄 重置</button>
@@ -323,7 +325,7 @@ window._resetAll=function(){remove(ref(db,'players'));remove(ref(db,'online'));r
 onValue(ref(db,'answers'),snap=>{window._allAnswers=snap.exists()?snap.val():{};if(document.getElementById('panel-answers').classList.contains('active'))window._renderAnswerPanel&&window._renderAnswerPanel();});
 onValue(ref(db,'players'),snap=>{
   if(snap.exists()){const data=snap.val();Object.values(data).forEach(p=>{const f=window._PLAYERS.find(x=>x.id===p.id);if(f){f.name=p.name;f.color=p.color;}});
-  window._renderScoreGrid&&window._renderScoreGrid();window._renderLeaderboard&&window._renderLeaderboard();window._renderMissionStatus&&window._renderMissionStatus();}
+  window._renderScoreGrid&&window._renderScoreGrid();window._renderLeaderboard&&window._renderLeaderboard();window._renderMissionStatus&&window._renderMissionStatus();window.renderDrawSelect&&window.renderDrawSelect();}
 });
 onValue(ref(db,'groupState'),snap=>{
   if(!snap.exists())return;
@@ -529,6 +531,7 @@ function renderDrawSelect(){
   document.getElementById('drawSelect').innerHTML='<option value="">— 選擇玩家 —</option>'+
     PLAYERS.filter(p=>!(p.id in missionAssigned)).map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
 }
+window.renderDrawSelect=renderDrawSelect;
 window.drawMission=function(){
   const sel=document.getElementById('drawSelect');const pid=parseInt(sel.value);
   if(isNaN(pid)){toast('請先選擇玩家 👆');return;}
@@ -623,11 +626,19 @@ window.assignDance=function(pid){
   renderDanceGroup();
 };
 window.removeDance=function(pid,t){danceTeams[t]=danceTeams[t].filter(x=>x!==pid);renderDanceGroup();};
-window.danceCorrect=function(t){danceScores[t]++;renderDanceGroup();toast(`${t}隊猜中 +1！(${t}隊 ${danceScores[t]}分)`);};
-window.danceFinish=function(){
+window.danceCorrect=function(t,pts){
+  danceScores[t]=Math.round((danceScores[t]+pts)*10)/10;
+  renderDanceGroup();
+  toast(`${t}隊 +${pts}分！(累計 ${danceScores[t]}分)`);
+};window.danceFinish=function(){
   const winner=danceScores.A>danceScores.B?'A':danceScores.B>danceScores.A?'B':'平手';
-  if(winner==='平手'){toast('平手！兩隊都加分！');['A','B'].forEach(t=>danceTeams[t].forEach(pid=>addScore(pid,3,'跳舞接龍')));}
-  else{toast(`🏆 ${winner}隊獲勝！全員+3分！`);danceTeams[winner].forEach(pid=>addScore(pid,3,'跳舞接龍'));}
+  if(winner==='平手'){
+    toast('平手！兩隊各自加累積分數＋3！');
+    ['A','B'].forEach(t=>{danceTeams[t].forEach(pid=>{addScore(pid,danceScores[t],'跳舞接龍');addScore(pid,3,'跳舞接龍');});});
+  } else {
+    toast(`🏆 ${winner}隊獲勝！全員加累積分數＋3！`);
+    danceTeams[winner].forEach(pid=>{addScore(pid,danceScores[winner],'跳舞接龍');addScore(pid,3,'跳舞接龍');});
+  }
 };
 window.resetDance=function(){danceTeams={A:[],B:[]};danceScores={A:0,B:0};renderDanceGroup();};
 
