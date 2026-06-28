@@ -632,12 +632,12 @@ window.danceCorrect=function(t,pts){
   toast(`${t}隊 +${pts}分！(累計 ${danceScores[t]}分)`);
 };window.danceFinish=function(){
   const winner=danceScores.A>danceScores.B?'A':danceScores.B>danceScores.A?'B':'平手';
+  ['A','B'].forEach(t=>{danceTeams[t].forEach(pid=>addScore(pid,danceScores[t],'跳舞接龍'));});
   if(winner==='平手'){
-    toast('平手！兩隊各自加累積分數＋3！');
-    ['A','B'].forEach(t=>{danceTeams[t].forEach(pid=>{addScore(pid,danceScores[t],'跳舞接龍');addScore(pid,3,'跳舞接龍');});});
+    toast('平手！兩隊各加累積分數！');
   } else {
-    toast(`🏆 ${winner}隊獲勝！全員加累積分數＋3！`);
-    danceTeams[winner].forEach(pid=>{addScore(pid,danceScores[winner],'跳舞接龍');addScore(pid,3,'跳舞接龍');});
+    danceTeams[winner].forEach(pid=>addScore(pid,3,'跳舞接龍'));
+    toast(`🏆 ${winner}隊獲勝！兩隊加累積分數，${winner}隊額外+3！`);
   }
 };
 window.resetDance=function(){danceTeams={A:[],B:[]};danceScores={A:0,B:0};renderDanceGroup();};
