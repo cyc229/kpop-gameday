@@ -11,12 +11,12 @@
 body{background:var(--bg);color:var(--white);font-family:'Noto Sans TC',sans-serif;min-height:100vh;}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 70% 50% at 20% 0%,rgba(140,30,255,0.2) 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 80% 100%,rgba(255,40,180,0.12) 0%,transparent 60%),repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(180,80,255,0.03) 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(180,80,255,0.03) 40px);pointer-events:none;z-index:0;}
 .app{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:16px;}
-.header{text-align:center;padding:20px 0 16px;border-bottom:1px solid var(--border);margin-bottom:16px;}
-.header img{height:90px;object-fit:contain;filter:drop-shadow(0 0 20px rgba(200,80,255,0.6));}
-.header-title{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:4px;background:linear-gradient(135deg,#c050ff,#ff40cc,#ffcc00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:none;}
+.header{text-align:center;padding:16px 0 12px;border-bottom:1px solid var(--border);margin-bottom:14px;}
+.header img{height:80px;object-fit:contain;filter:drop-shadow(0 0 20px rgba(200,80,255,0.6));}
+.header-title{font-family:'Bebas Neue',sans-serif;font-size:38px;letter-spacing:4px;background:linear-gradient(135deg,#c050ff,#ff40cc,#ffcc00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:none;}
 .header-sub{font-size:11px;color:var(--muted);letter-spacing:5px;margin-top:4px;text-transform:uppercase;}
-.nav{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;}
-.nav-btn{padding:8px 16px;border-radius:100px;border:1.5px solid var(--border);background:var(--surface);color:var(--muted);font-family:'Noto Sans TC',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;letter-spacing:1px;}
+.nav{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;}
+.nav-btn{padding:8px 14px;border-radius:100px;border:1.5px solid var(--border);background:var(--surface);color:var(--muted);font-family:'Noto Sans TC',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;letter-spacing:1px;}
 .nav-btn:hover{border-color:var(--purple);color:var(--white);}
 .nav-btn.active{background:linear-gradient(135deg,var(--purple),var(--pink));border-color:transparent;color:white;box-shadow:0 4px 16px rgba(200,80,255,0.4);}
 .panel{display:none;}.panel.active{display:block;}
@@ -24,10 +24,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .timer-display{font-family:'Bebas Neue',sans-serif;font-size:44px;color:var(--white);letter-spacing:2px;line-height:1;min-width:80px;}
 .timer-display.warning{color:var(--pink);}
 .timer-controls{display:flex;gap:6px;flex-wrap:wrap;}
-.timer-btn{padding:7px 14px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface2);color:var(--white);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.15s;}
-.timer-btn:hover{border-color:var(--purple);}
-.timer-btn.primary{background:linear-gradient(135deg,var(--purple),var(--pink));border-color:transparent;box-shadow:0 2px 10px rgba(200,80,255,0.3);}
+.tbtn{padding:7px 14px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface2);color:var(--white);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.15s;}
+.tbtn:hover{border-color:var(--purple);}
+.tbtn.primary{background:linear-gradient(135deg,var(--purple),var(--pink));border-color:transparent;box-shadow:0 2px 10px rgba(200,80,255,0.3);}
 .timer-label{font-size:11px;color:var(--muted);margin-left:auto;letter-spacing:2px;}
+/* SCORE */
 .leaderboard{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:14px 18px;margin-bottom:14px;}
 .lb-title{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:4px;color:var(--muted);margin-bottom:10px;}
 .lb-row{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
@@ -40,48 +41,75 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
 .player-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:14px 12px;text-align:center;position:relative;overflow:hidden;}
 .player-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--player-color,var(--purple));}
-.player-avatar{width:46px;height:46px;border-radius:50%;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:20px;color:white;font-weight:900;}
-.player-name{font-size:14px;font-weight:700;margin-bottom:2px;}
-.player-score{font-family:'Bebas Neue',sans-serif;font-size:38px;line-height:1;margin-bottom:8px;}
+.player-avatar{width:44px;height:44px;border-radius:50%;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:18px;color:white;font-weight:900;}
+.player-name{font-size:13px;font-weight:700;margin-bottom:2px;}
+.player-score{font-family:'Bebas Neue',sans-serif;font-size:34px;line-height:1;margin-bottom:6px;}
 .rank-badge{position:absolute;top:8px;right:8px;font-family:'Bebas Neue',sans-serif;font-size:11px;padding:2px 7px;border-radius:100px;background:var(--surface2);color:var(--muted);border:1px solid var(--border);}
 .rank-badge.gold{background:rgba(255,215,0,0.18);color:var(--gold);border-color:var(--gold);}
 .rank-badge.silver{background:rgba(200,200,220,0.12);color:#c8c8dc;border-color:#c8c8dc;}
 .rank-badge.bronze{background:rgba(200,140,80,0.12);color:#c88c50;border-color:#c88c50;}
-.mbadge{position:absolute;top:8px;left:8px;font-size:13px;}
-.score-controls{display:flex;gap:4px;justify-content:center;flex-wrap:wrap;}
-.score-btn{padding:3px 8px;border-radius:7px;border:1px solid var(--border);background:var(--surface2);color:var(--white);font-size:11px;font-weight:700;cursor:pointer;transition:all 0.15s;}
-.score-btn:hover{background:var(--purple);border-color:var(--purple);}
-.score-btn.minus{color:var(--muted);}
-.score-btn.minus:hover{background:rgba(255,80,120,0.25);border-color:var(--pink);color:var(--pink);}
-.game-select-row{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;}
-.game-tag{padding:6px 14px;border-radius:100px;border:1.5px solid var(--border);background:var(--surface2);color:var(--muted);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.15s;}
+.mbadge{position:absolute;top:8px;left:8px;font-size:12px;}
+.score-controls{display:flex;gap:3px;justify-content:center;flex-wrap:wrap;}
+.sbtn{padding:3px 7px;border-radius:7px;border:1px solid var(--border);background:var(--surface2);color:var(--white);font-size:11px;font-weight:700;cursor:pointer;transition:all 0.15s;}
+.sbtn:hover{background:var(--purple);border-color:var(--purple);}
+.sbtn.minus{color:var(--muted);}
+.sbtn.minus:hover{background:rgba(255,80,120,0.25);border-color:var(--pink);color:var(--pink);}
+/* BREAKDOWN */
+.game-select-row{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
+.game-tag{padding:5px 12px;border-radius:100px;border:1.5px solid var(--border);background:var(--surface2);color:var(--muted);font-size:11px;font-weight:700;cursor:pointer;transition:all 0.15s;}
 .game-tag.active{border-color:var(--yellow);color:var(--yellow);background:rgba(255,204,0,0.1);}
-.game-score-panel{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:14px;}
-.game-score-title{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:3px;color:var(--yellow);margin-bottom:12px;}
+.game-score-panel{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:14px;}
+.game-score-title{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:3px;color:var(--yellow);margin-bottom:10px;}
 .game-score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
 .gpi{background:var(--surface2);border-radius:10px;padding:10px;text-align:center;}
-.gpi-name{font-size:12px;color:var(--muted);margin-bottom:4px;}
-.gpi-pts{font-family:'Bebas Neue',sans-serif;font-size:28px;}
-.gpi-ctrl{display:flex;gap:4px;justify-content:center;margin-top:6px;}
-.detail-table{width:100%;border-collapse:collapse;font-size:12px;}
-.detail-table th{background:var(--surface2);color:var(--muted);padding:8px 10px;text-align:center;font-weight:700;letter-spacing:1px;border:1px solid rgba(255,255,255,0.06);}
-.detail-table td{padding:8px 10px;text-align:center;border:1px solid rgba(255,255,255,0.06);}
+.gpi-name{font-size:11px;color:var(--muted);margin-bottom:4px;}
+.gpi-pts{font-family:'Bebas Neue',sans-serif;font-size:26px;}
+.gpi-ctrl{display:flex;gap:3px;justify-content:center;margin-top:5px;}
+.detail-table{width:100%;border-collapse:collapse;font-size:11px;}
+.detail-table th{background:var(--surface2);color:var(--muted);padding:7px 8px;text-align:center;font-weight:700;letter-spacing:1px;border:1px solid rgba(255,255,255,0.06);}
+.detail-table td{padding:7px 8px;text-align:center;border:1px solid rgba(255,255,255,0.06);}
 .detail-table tr:nth-child(even) td{background:rgba(255,255,255,0.02);}
-.tc{color:var(--yellow);font-family:'Bebas Neue',sans-serif;font-size:16px;}
+.tc{color:var(--yellow);font-family:'Bebas Neue',sans-serif;font-size:15px;}
 .pc{font-weight:700;text-align:left;}
+/* ANSWERS */
+.answer-game-tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
+.answer-panel-box{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:14px;}
+.answer-panel-title{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:3px;color:var(--purple);margin-bottom:12px;display:flex;align-items:center;gap:10px;}
+.asbadge{font-size:10px;padding:2px 8px;border-radius:100px;border:1px solid var(--border);color:var(--muted);letter-spacing:2px;}
+.asbadge.open{border-color:var(--teal);color:var(--teal);}
+.q-nav{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.q-num{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--white);letter-spacing:2px;}
+.q-total{font-size:13px;color:var(--muted);}
+.correct-answer-display{background:rgba(0,240,200,0.08);border:1px solid var(--teal);border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:14px;font-weight:700;color:var(--teal);}
+.ctrl-row{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center;}
+.open-btn{padding:10px 18px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--teal),#00b090);color:#0a0010;font-family:'Noto Sans TC',sans-serif;font-size:13px;font-weight:900;cursor:pointer;transition:all 0.2s;}
+.open-btn:hover{transform:translateY(-1px);}
+.reveal-btn{padding:10px 18px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--yellow),#cc8800);color:#0a0010;font-family:'Noto Sans TC',sans-serif;font-size:13px;font-weight:900;cursor:pointer;transition:all 0.2s;}
+.reveal-btn:hover{transform:translateY(-1px);}
+.reveal-btn:disabled{opacity:0.4;cursor:not-allowed;transform:none;}
+.next-btn{padding:10px 18px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--purple),var(--pink));color:white;font-family:'Noto Sans TC',sans-serif;font-size:13px;font-weight:900;cursor:pointer;transition:all 0.2s;}
+.next-btn:hover{transform:translateY(-1px);}
+.answers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px;}
+.ac{background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;padding:10px;text-align:center;}
+.ac.has{border-color:var(--purple);}
+.ac-name{font-size:11px;font-weight:700;margin-bottom:5px;}
+.ac-text{font-size:13px;font-weight:900;color:var(--yellow);min-height:18px;word-break:break-all;}
+.ac-text.blur{filter:blur(5px);user-select:none;}
+.ac-wait{font-size:11px;color:var(--muted);}
+/* MISSION */
 .mission-inner{max-width:520px;margin:0 auto;}
-.mission-big-title{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:4px;color:var(--purple);text-align:center;margin-bottom:6px;}
-.mission-sub{text-align:center;color:var(--muted);font-size:12px;margin-bottom:20px;line-height:1.7;}
-.draw-area{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:14px;}
-.draw-select{width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface2);color:var(--white);font-family:'Noto Sans TC',sans-serif;font-size:14px;font-weight:700;margin-bottom:12px;outline:none;cursor:pointer;}
-.draw-btn{width:100%;padding:12px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--purple),var(--pink));color:white;font-family:'Noto Sans TC',sans-serif;font-size:15px;font-weight:900;cursor:pointer;letter-spacing:2px;transition:all 0.2s;box-shadow:0 4px 16px rgba(200,80,255,0.3);}
+.mission-big-title{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:4px;color:var(--purple);text-align:center;margin-bottom:6px;}
+.mission-sub{text-align:center;color:var(--muted);font-size:12px;margin-bottom:18px;line-height:1.7;}
+.draw-area{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:12px;}
+.draw-select{width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface2);color:var(--white);font-family:'Noto Sans TC',sans-serif;font-size:14px;font-weight:700;margin-bottom:10px;outline:none;cursor:pointer;}
+.draw-btn{width:100%;padding:12px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--purple),var(--pink));color:white;font-family:'Noto Sans TC',sans-serif;font-size:14px;font-weight:900;cursor:pointer;letter-spacing:2px;transition:all 0.2s;}
 .draw-btn:hover{transform:translateY(-2px);}
 .draw-btn:disabled{opacity:0.4;cursor:not-allowed;transform:none;}
-.mission-reveal{background:var(--surface2);border:1.5px solid var(--purple);border-radius:var(--radius);padding:24px;text-align:center;display:none;box-shadow:0 0 40px rgba(200,80,255,0.2);margin-bottom:14px;}
+.mission-reveal{background:var(--surface2);border:1.5px solid var(--purple);border-radius:var(--radius);padding:22px;text-align:center;display:none;box-shadow:0 0 40px rgba(200,80,255,0.2);margin-bottom:12px;}
 .reveal-label{font-size:11px;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-bottom:6px;}
-.reveal-player{font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--white);margin-bottom:16px;letter-spacing:2px;}
-.reveal-task{font-size:18px;font-weight:900;color:var(--yellow);line-height:1.5;margin-bottom:16px;padding:14px;background:rgba(255,204,0,0.07);border-radius:10px;border:1px solid rgba(255,204,0,0.2);}
-.confirm-btn{padding:9px 24px;border-radius:100px;border:1.5px solid var(--border);background:transparent;color:var(--muted);font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s;}
+.reveal-player{font-family:'Bebas Neue',sans-serif;font-size:30px;color:var(--white);margin-bottom:14px;letter-spacing:2px;}
+.reveal-task{font-size:17px;font-weight:900;color:var(--yellow);line-height:1.5;margin-bottom:14px;padding:12px;background:rgba(255,204,0,0.07);border-radius:10px;border:1px solid rgba(255,204,0,0.2);}
+.confirm-btn{padding:8px 22px;border-radius:100px;border:1.5px solid var(--border);background:transparent;color:var(--muted);font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s;}
 .confirm-btn:hover{border-color:var(--purple);color:var(--white);}
 .msbox{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px;}
 .mstitle{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:3px;color:var(--muted);margin-bottom:10px;}
@@ -95,74 +123,51 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .mcbtn:hover{background:rgba(0,240,200,0.15);}
 .mfbtn{padding:3px 10px;border-radius:7px;border:1px solid var(--pink);background:transparent;color:var(--pink);font-size:11px;font-weight:700;cursor:pointer;}
 .mfbtn:hover{background:rgba(255,80,160,0.15);}
-.group-box{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:14px;}
-.group-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;color:var(--purple);margin-bottom:14px;}
-.team-setup{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+/* GROUP */
+.group-box{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:14px;}
+.group-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;color:var(--purple);margin-bottom:12px;}
+.group-tabs{display:flex;gap:8px;margin-bottom:14px;}
+.group-tab{padding:8px 18px;border-radius:100px;border:1.5px solid var(--border);background:var(--surface2);color:var(--muted);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;}
+.group-tab.active{background:linear-gradient(135deg,var(--purple),var(--pink));border-color:transparent;color:white;}
+.team-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.team-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px;}
 .team-box{background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;padding:14px;}
-.team-name{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;margin-bottom:10px;}
-.team-name.a{color:#ff80cc;}.team-name.b{color:#80aaff;}
-.team-members{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;min-height:32px;}
-.tmc{padding:4px 10px;border-radius:100px;font-size:12px;font-weight:700;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--muted);}
-.tmc.in-a{background:rgba(255,128,204,0.2);border-color:#ff80cc;color:#ff80cc;}
-.tmc.in-b{background:rgba(128,170,255,0.2);border-color:#80aaff;color:#80aaff;}
-.team-score-big{font-family:'Bebas Neue',sans-serif;font-size:48px;color:var(--white);text-align:center;margin-bottom:10px;}
-.team-add-btn{width:100%;padding:10px;border-radius:10px;border:none;font-family:'Noto Sans TC',sans-serif;font-size:14px;font-weight:900;cursor:pointer;transition:all 0.2s;}
-.team-add-btn.a{background:linear-gradient(135deg,#ff40cc,#cc00aa);color:white;}
-.team-add-btn.b{background:linear-gradient(135deg,#4080ff,#0040cc);color:white;}
+.team-label{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:2px;margin-bottom:8px;}
+.team-members{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;min-height:28px;}
+.tmc{padding:3px 9px;border-radius:100px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--muted);}
+.team-score-big{font-family:'Bebas Neue',sans-serif;font-size:42px;color:var(--white);text-align:center;margin-bottom:8px;}
+.team-add-btn{width:100%;padding:9px;border-radius:10px;border:none;font-family:'Noto Sans TC',sans-serif;font-size:13px;font-weight:900;cursor:pointer;transition:all 0.2s;}
 .team-add-btn:hover{transform:translateY(-1px);}
-.upool{margin-bottom:14px;}.upool-title{font-size:12px;color:var(--muted);letter-spacing:2px;margin-bottom:8px;}
-.uchips{display:flex;flex-wrap:wrap;gap:6px;}
-.uchip{padding:5px 12px;border-radius:100px;font-size:12px;font-weight:700;cursor:pointer;background:var(--surface2);border:1.5px solid var(--border);color:var(--white);transition:all 0.15s;}
+.upool{margin-bottom:12px;}.upool-title{font-size:11px;color:var(--muted);letter-spacing:2px;margin-bottom:7px;}
+.uchips{display:flex;flex-wrap:wrap;gap:5px;}
+.uchip{padding:4px 10px;border-radius:100px;font-size:11px;font-weight:700;cursor:pointer;background:var(--surface2);border:1.5px solid var(--border);color:var(--white);transition:all 0.15s;}
 .uchip:hover{border-color:var(--purple);}
-/* ANSWER PANEL */
-.answer-game-tabs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
-.answer-panel-box{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:14px;}
-.answer-panel-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;color:var(--purple);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
-.answer-status-badge{font-size:11px;padding:3px 10px;border-radius:100px;border:1px solid var(--border);color:var(--muted);letter-spacing:2px;}
-.answer-status-badge.open{border-color:var(--teal);color:var(--teal);}
-.answer-open-btn{padding:10px 20px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--teal),#00b090);color:#0a0010;font-family:'Noto Sans TC',sans-serif;font-size:13px;font-weight:900;cursor:pointer;margin-right:8px;transition:all 0.2s;}
-.answer-open-btn:hover{transform:translateY(-1px);}
-.answer-reveal-btn{padding:10px 20px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--yellow),#cc8800);color:#0a0010;font-family:'Noto Sans TC',sans-serif;font-size:13px;font-weight:900;cursor:pointer;transition:all 0.2s;}
-.answer-reveal-btn:hover{transform:translateY(-1px);}
-.answer-reveal-btn:disabled{opacity:0.4;cursor:not-allowed;transform:none;}
-.answers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px;}
-.answer-card{background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;padding:12px;text-align:center;}
-.answer-card.has-answer{border-color:var(--purple);}
-.answer-card-name{font-size:12px;font-weight:700;margin-bottom:6px;}
-.answer-card-text{font-size:14px;font-weight:900;color:var(--yellow);min-height:20px;word-break:break-all;}
-.answer-card-text.hidden{filter:blur(6px);user-select:none;}
-.answer-card-waiting{font-size:11px;color:var(--muted);}
-.correct-answer-input{width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface2);color:var(--white);font-family:'Noto Sans TC',sans-serif;font-size:14px;margin-bottom:10px;outline:none;}
-.correct-answer-input:focus{border-color:var(--yellow);}
+.dance-score-row{display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap;}
 /* AWARD */
-.award-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:100;align-items:center;justify-content:center;flex-direction:column;}
+.award-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:100;align-items:center;justify-content:center;flex-direction:column;}
 .award-overlay.show{display:flex;}
-.award-box{text-align:center;max-width:500px;width:90%;}
-.award-title{font-family:'Bebas Neue',sans-serif;font-size:56px;letter-spacing:6px;background:linear-gradient(135deg,var(--yellow),var(--pink),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:32px;animation:pulse 1.5s ease-in-out infinite;}
-@keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.04);}}
-.award-podium{display:flex;align-items:flex-end;justify-content:center;gap:16px;margin-bottom:32px;}
-.podium-item{text-align:center;}
-.podium-avatar{width:70px;height:70px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:28px;color:white;margin:0 auto 8px;border:3px solid rgba(255,255,255,0.2);}
-.podium-name{font-size:16px;font-weight:900;margin-bottom:4px;}
-.podium-score{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--yellow);}
-.podium-medal{font-size:36px;margin-bottom:8px;}
-.podium-bar{width:80px;border-radius:8px 8px 0 0;}
-.podium-bar.first{height:120px;background:linear-gradient(to top,#cc8800,var(--gold));}
-.podium-bar.second{height:90px;background:linear-gradient(to top,#888,#ddd);}
-.podium-bar.third{height:70px;background:linear-gradient(to top,#885500,#c88c50);}
-.confetti{position:fixed;inset:0;pointer-events:none;z-index:99;}
-.close-award{padding:12px 32px;border-radius:100px;border:1.5px solid var(--border);background:transparent;color:var(--muted);font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;}
+.award-box{text-align:center;max-width:520px;width:90%;position:relative;z-index:2;}
+.award-title{font-family:'Bebas Neue',sans-serif;font-size:52px;letter-spacing:6px;background:linear-gradient(135deg,var(--yellow),var(--pink),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:24px;}
+.reveal-step{display:none;text-align:center;}
+.reveal-step.show{display:block;}
+.reveal-rank-label{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:4px;color:var(--muted);margin-bottom:8px;}
+.reveal-medal{font-size:80px;animation:popIn 0.5s cubic-bezier(0.175,0.885,0.32,1.275);}
+@keyframes popIn{from{transform:scale(0);opacity:0;}to{transform:scale(1);opacity:1;}}
+.reveal-name{font-family:'Bebas Neue',sans-serif;font-size:48px;letter-spacing:3px;margin-bottom:6px;}
+.reveal-score{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--yellow);}
+.reveal-avatar{width:100px;height:100px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:40px;color:white;margin:0 auto 16px;border:4px solid rgba(255,255,255,0.2);box-shadow:0 0 40px rgba(200,80,255,0.4);}
+.award-next-btn{margin-top:20px;padding:12px 32px;border-radius:100px;border:none;background:linear-gradient(135deg,var(--purple),var(--pink));color:white;font-family:'Noto Sans TC',sans-serif;font-size:15px;font-weight:900;cursor:pointer;transition:all 0.2s;box-shadow:0 4px 16px rgba(200,80,255,0.3);}
+.award-next-btn:hover{transform:translateY(-2px);}
+.close-award{margin-top:16px;padding:10px 28px;border-radius:100px;border:1.5px solid var(--border);background:transparent;color:var(--muted);font-size:13px;font-weight:700;cursor:pointer;}
 .close-award:hover{border-color:var(--purple);color:var(--white);}
-.ice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
-.ice-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:14px;text-align:center;}
-.ice-avatar{width:50px;height:50px;border-radius:50%;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:22px;color:white;}
-.ice-name{font-size:14px;font-weight:900;}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:1;}
+.card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:12px;}
+.slabel{font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:4px;color:var(--muted);margin-bottom:10px;}
 .toast-wrap{position:fixed;bottom:20px;right:20px;z-index:999;display:flex;flex-direction:column;gap:7px;}
 .toast{background:var(--surface2);border:1.5px solid var(--purple);border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;color:var(--white);box-shadow:0 8px 20px rgba(0,0,0,0.4);animation:slideIn 0.3s ease;max-width:260px;}
 @keyframes slideIn{from{opacity:0;transform:translateX(20px);}to{opacity:1;transform:translateX(0);}}
-.card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px;}
-.slabel{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:4px;color:var(--muted);margin-bottom:10px;}
-.ctrl-row{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center;}
+.reset-btn{padding:6px 14px;border-radius:8px;border:1px solid var(--pink);background:transparent;color:var(--pink);font-size:11px;font-weight:700;cursor:pointer;margin-left:auto;}
+.reset-btn:hover{background:rgba(255,80,160,0.15);}
 </style>
 </head>
 <body>
@@ -173,31 +178,28 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <div class="header-sub">主控端 · HOST</div>
   </div>
   <div class="nav">
-    <button class="nav-btn active" onclick="switchTab('score',this)">🏆 計分板</button>
-    <button class="nav-btn" onclick="switchTab('breakdown',this)">📊 明細</button>
+    <button class="nav-btn active" onclick="switchTab('score',this)">🏆 計分 / 明細</button>
     <button class="nav-btn" onclick="switchTab('answers',this)">✏️ 答題</button>
     <button class="nav-btn" onclick="switchTab('mission',this)">🕵️ 秘密任務</button>
     <button class="nav-btn" onclick="switchTab('group',this)">👥 團體遊戲</button>
-    <button class="nav-btn" onclick="switchTab('ice',this)">🍳 破冰名單</button>
     <button class="nav-btn" onclick="showAward()">🎖 頒獎</button>
+    <button class="reset-btn" onclick="resetPlayers()">🔄 重置玩家</button>
   </div>
   <div class="timer-bar">
     <div class="timer-display" id="timerDisplay">30</div>
     <div class="timer-controls">
-      <button class="timer-btn primary" id="timerStartBtn" onclick="timerToggle()">▶ 開始</button>
-      <button class="timer-btn" onclick="timerReset(30)">30s</button>
-      <button class="timer-btn" onclick="timerReset(60)">60s</button>
-      <button class="timer-btn" onclick="timerReset(120)">2min</button>
+      <button class="tbtn primary" id="timerStartBtn" onclick="timerToggle()">▶ 開始</button>
+      <button class="tbtn" onclick="timerReset(30)">30s</button>
+      <button class="tbtn" onclick="timerReset(60)">60s</button>
+      <button class="tbtn" onclick="timerReset(120)">2min</button>
     </div>
     <div class="timer-label">計時器</div>
   </div>
 
+  <!-- SCORE + BREAKDOWN combined -->
   <div class="panel active" id="panel-score">
     <div class="leaderboard"><div class="lb-title">LEADERBOARD</div><div id="lbList"></div></div>
     <div class="score-grid" id="scoreGrid"></div>
-  </div>
-
-  <div class="panel" id="panel-breakdown">
     <div class="card">
       <div class="slabel">依遊戲加分</div>
       <div class="game-select-row" id="gameSelectRow"></div>
@@ -212,15 +214,17 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     </div>
   </div>
 
+  <!-- ANSWERS -->
   <div class="panel" id="panel-answers">
     <div class="answer-game-tabs" id="answerGameTabs"></div>
     <div class="answer-panel-box" id="answerPanelBox"></div>
   </div>
 
+  <!-- MISSION -->
   <div class="panel" id="panel-mission">
     <div class="mission-inner">
       <div class="mission-big-title">秘密任務抽籤</div>
-      <div class="mission-sub">每位玩家輪流走過來抽籤<br>只有當事人和主持人知道任務內容</div>
+      <div class="mission-sub">每位玩家輪流走過來抽籤<br>只有當事人和主持人知道任務內容<br><span style="color:var(--yellow)">完成 +3分｜第一個完成 額外 +1分｜被發現 0分</span></div>
       <div class="draw-area">
         <select class="draw-select" id="drawSelect"><option value="">— 選擇玩家 —</option></select>
         <button class="draw-btn" id="drawBtn" onclick="drawMission()">🎲 抽取任務</button>
@@ -235,45 +239,69 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     </div>
   </div>
 
+  <!-- GROUP -->
   <div class="panel" id="panel-group">
     <div class="group-box">
-      <div class="group-title">👥 團體遊戲分隊</div>
-      <div class="upool">
-        <div class="upool-title">未分配（點擊自動分配到人數少的隊）</div>
-        <div class="uchips" id="unassignedChips"></div>
+      <div class="group-title">👥 團體遊戲</div>
+      <div class="group-tabs">
+        <button class="group-tab active" onclick="switchGroupTab('dance',this)">💃 跳舞接龍</button>
+        <button class="group-tab" onclick="switchGroupTab('word',this)">📝 詞語接龍</button>
       </div>
-      <div class="team-setup">
-        <div class="team-box">
-          <div class="team-name a">⭐ A 隊</div>
-          <div class="team-members" id="teamAMembers"></div>
-          <div class="team-score-big" id="teamAScore">0</div>
-          <button class="team-add-btn a" onclick="addTeamScore('A')">🏆 A隊獲勝 全員 +3</button>
+      <div id="groupDancePanel">
+        <div class="upool"><div class="upool-title">未分配（點擊分配）</div><div class="uchips" id="danceUnassigned"></div></div>
+        <div class="team-grid-2" id="danceTeams"></div>
+        <div class="dance-score-row">
+          <span style="font-size:12px;color:var(--muted)">猜中歌曲：</span>
+          <button class="tbtn" onclick="danceCorrect('A')">A隊猜中 +1</button>
+          <button class="tbtn" onclick="danceCorrect('B')">B隊猜中 +1</button>
+          <button class="tbtn primary" onclick="danceFinish()">🏁 結算 高分隊全員+3</button>
         </div>
-        <div class="team-box">
-          <div class="team-name b">⭐ B 隊</div>
-          <div class="team-members" id="teamBMembers"></div>
-          <div class="team-score-big" id="teamBScore">0</div>
-          <button class="team-add-btn b" onclick="addTeamScore('B')">🏆 B隊獲勝 全員 +3</button>
-        </div>
+        <button class="tbtn" style="width:100%;margin-top:8px;" onclick="resetDance()">🔄 重置</button>
       </div>
-      <button class="timer-btn" style="width:100%;padding:10px;margin-top:4px;" onclick="resetTeams()">🔄 重置隊伍</button>
-    </div>
-  </div>
-
-  <div class="panel" id="panel-ice">
-    <div class="card">
-      <div class="slabel">🍳 平底鍋破冰遊戲 — 玩家名單</div>
-      <div class="ice-grid" id="iceGrid"></div>
+      <div id="groupWordPanel" style="display:none">
+        <div class="upool"><div class="upool-title">未分配（點擊分配）</div><div class="uchips" id="wordUnassigned"></div></div>
+        <div class="team-grid-3" id="wordTeams"></div>
+        <div class="dance-score-row">
+          <span style="font-size:12px;color:var(--muted)">完成一個詞：</span>
+          <button class="tbtn" onclick="wordCorrect('A')">A組 +1</button>
+          <button class="tbtn" onclick="wordCorrect('B')">B組 +1</button>
+          <button class="tbtn" onclick="wordCorrect('C')">C組 +1</button>
+        </div>
+        <button class="tbtn" style="width:100%;margin-top:8px;" onclick="resetWord()">🔄 重置</button>
+      </div>
     </div>
   </div>
 </div>
 
+<!-- AWARD OVERLAY -->
 <div class="award-overlay" id="awardOverlay">
   <canvas class="confetti" id="confettiCanvas"></canvas>
   <div class="award-box">
     <div class="award-title">🏆 頒獎典禮</div>
-    <div class="award-podium" id="awardPodium"></div>
-    <button class="close-award" onclick="closeAward()">關閉</button>
+    <div id="revealStep3" class="reveal-step">
+      <div class="reveal-rank-label">🥉 第三名</div>
+      <div class="reveal-avatar" id="avatar3"></div>
+      <div class="reveal-medal">🥉</div>
+      <div class="reveal-name" id="name3"></div>
+      <div class="reveal-score" id="score3"></div>
+      <button class="award-next-btn" onclick="showRank(2)">下一位 ▶</button>
+    </div>
+    <div id="revealStep2" class="reveal-step">
+      <div class="reveal-rank-label">🥈 第二名</div>
+      <div class="reveal-avatar" id="avatar2"></div>
+      <div class="reveal-medal">🥈</div>
+      <div class="reveal-name" id="name2"></div>
+      <div class="reveal-score" id="score2"></div>
+      <button class="award-next-btn" onclick="showRank(1)">下一位 ▶</button>
+    </div>
+    <div id="revealStep1" class="reveal-step">
+      <div class="reveal-rank-label">🥇 第一名</div>
+      <div class="reveal-avatar" id="avatar1"></div>
+      <div class="reveal-medal" style="font-size:100px">🥇</div>
+      <div class="reveal-name" id="name1" style="font-size:60px"></div>
+      <div class="reveal-score" id="score1" style="font-size:36px"></div>
+      <button class="close-award" onclick="closeAward()" style="margin-top:24px">關閉</button>
+    </div>
   </div>
 </div>
 <div class="toast-wrap" id="toastWrap"></div>
@@ -281,38 +309,19 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
 import { getDatabase, ref, set, onValue, remove } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-database.js";
-const firebaseConfig={apiKey:"AIzaSyCxooQDoIoUTzLXXmJ33_woXAQ2eP2UYrQ",authDomain:"kpop-gameday.firebaseapp.com",databaseURL:"https://kpop-gameday-default-rtdb.firebaseio.com",projectId:"kpop-gameday",storageBucket:"kpop-gameday.firebasestorage.app",messagingSenderId:"993002749510",appId:"1:993002749510:web:020c1121f4ba3f95395447"};
-const app=initializeApp(firebaseConfig);
-const db=getDatabase(app);
-window._db=db; window._ref=ref; window._set=set; window._remove=remove;
-
+const fc={apiKey:"AIzaSyCxooQDoIoUTzLXXmJ33_woXAQ2eP2UYrQ",authDomain:"kpop-gameday.firebaseapp.com",databaseURL:"https://kpop-gameday-default-rtdb.firebaseio.com",projectId:"kpop-gameday",storageBucket:"kpop-gameday.firebasestorage.app",messagingSenderId:"993002749510",appId:"1:993002749510:web:020c1121f4ba3f95395447"};
+const app=initializeApp(fc);const db=getDatabase(app);
+window._db=db;window._ref=ref;window._set=set;window._remove=remove;
 window._pushState=function(){
-  const scores={};
-  window._PLAYERS.forEach(p=>{scores[p.id]=window._totalScore(p.id);});
+  const scores={};window._PLAYERS.forEach(p=>{scores[p.id]=window._totalScore(p.id);});
   set(ref(db,'gameState'),{scores,gameScores:window._gameScores,missionAssigned:window._missionAssigned,missionDone:window._missionDone,missionFailed:window._missionFailed,ts:Date.now()});
 };
-
-window._pushAnswerState=function(game,state){
-  set(ref(db,`answerRound/${game}`),state);
-};
-
-// listen to answers
-onValue(ref(db,'answers'),snap=>{
-  window._allAnswers=snap.exists()?snap.val():{};
-  if(document.getElementById('panel-answers').classList.contains('active')) window._renderAnswerPanel();
-});
-
-// listen to players (for name/color updates)
+window._pushAnswerState=function(game,qNum,state){set(ref(db,`answerRound/${game}/${qNum}`),state);};
+window._resetPlayers=function(){remove(ref(db,'players'));remove(ref(db,'online'));};
+onValue(ref(db,'answers'),snap=>{window._allAnswers=snap.exists()?snap.val():{};if(document.getElementById('panel-answers').classList.contains('active'))window._renderAnswerPanel&&window._renderAnswerPanel();});
 onValue(ref(db,'players'),snap=>{
-  if(snap.exists()){
-    const data=snap.val();
-    Object.values(data).forEach(p=>{
-      const found=window._PLAYERS.find(x=>x.id===p.id);
-      if(found){found.name=p.name;found.color=p.color;}
-    });
-    window._renderScoreGrid && window._renderScoreGrid();
-    window._renderLeaderboard && window._renderLeaderboard();
-  }
+  if(snap.exists()){const data=snap.val();Object.values(data).forEach(p=>{const f=window._PLAYERS.find(x=>x.id===p.id);if(f){f.name=p.name;f.color=p.color;}});
+  window._renderScoreGrid&&window._renderScoreGrid();window._renderLeaderboard&&window._renderLeaderboard();window._renderMissionStatus&&window._renderMissionStatus();}
 });
 </script>
 
@@ -325,24 +334,38 @@ const PLAYERS=[
   {id:8,name:'美嘉',color:'#ff80cc'}
 ];
 window._PLAYERS=PLAYERS;
-const GAMES=['前奏猜歌','Emoji猜歌','韓文翻中文','混音猜歌','五官猜人','跳舞接龍','詞語接龍'];
-const ANSWER_GAMES=['Emoji猜歌','韓文翻中文','混音猜歌'];
+
+const GAMES=['前奏猜歌','五官猜人','Emoji猜歌','韓文翻中文','混音猜歌','跳舞接龍','詞語接龍','秘密任務'];
+
+const ANSWER_GAMES={
+  'Emoji猜歌':{total:10,answers:['I-DLE《Queencard》','NewJeans《Super Shy》','BLACKPINK《How You Like That》','IU《BBIBBI》','SEVENTEEN《THUNDER》','BTS《Dynamite》','Stray Kids《God\'s Menu》','ATEEZ《WORK》','BIGBANG《FANTASTIC BABY》','NMIXX《Blue Valentine》']},
+  '韓文翻中文':{total:5,answers:['TWICE《Alcohol-Free》','Jennie《Mantra》','SEVENTEEN《Fallin\' Flower》','ILLIT《Magnetic》','DAY6《YOU WERE BEAUTIFUL》']},
+  '混音猜歌':{total:5,answers:[
+    'SUPER JUNIOR《Mr. Simple》／SHINee《Lucifer》／LE SSERAFIM《ANTIFRAGILE》／ITZY《WANNABE》',
+    'ATEEZ《BOUNCY》／KickFlip《Mama Said》／aespa《Whiplash》／MAMAMOO《HIP》',
+    'BOYNEXTDOOR《오늘만 I LOVE YOU》／TXT《Deja Vu》／NewJeans《How Sweet》／NMIXX《Love Me Like This》',
+    'P1Harmony《DUH!》／BTS《MIC Drop》／BABYMONSTER《DRIP》／I-DLE《Super Lady》',
+    'Wanna One《Energetic》／PLAVE《WAY 4 LUV》／TWICE《What is Love》／Hearts2Hearts《RUDE!》'
+  ]}
+};
+
 const MISSIONS=['誠心誇獎每一個人至少一次','和 5 個人合照（每張至多 3 人，大合照不算）','向 5 個人提出請求並讓對方完成','加所有人 IG 並發文或限動標注','講話時自然提及「拒同擔」5 次','講話時自然提及「滿額禮」5 次','講話時自然提及「年末舞台」5 次','在每個人身上貼一張貼紙','拿 5 個人的配飾穿在身上（不同時，需留照片存證）'];
 
 let gameScores={},missionAssigned={},missionDone={},missionFailed={},availableMissions=[...MISSIONS];
-let activeGame=GAMES[0],activeAnswerGame=ANSWER_GAMES[0];
-let teamA=[],teamB=[];
-let answerRoundOpen={},answerRevealed={};
+let activeGame=GAMES[0],activeAnswerGame='Emoji猜歌';
+let answerQNum={},answerOpen={},answerRevealed={};
+let danceTeams={A:[],B:[]},danceScores={A:0,B:0};
+let wordTeams={A:[],B:[],C:[]},wordScores={A:0,B:0,C:0};
 window._allAnswers={};
 window._gameScores=gameScores;
 window._missionAssigned=missionAssigned;
 window._missionDone=missionDone;
 window._missionFailed=missionFailed;
 PLAYERS.forEach(p=>{gameScores[p.id]={};GAMES.forEach(g=>{gameScores[p.id][g]=0;});});
+Object.keys(ANSWER_GAMES).forEach(g=>{answerQNum[g]=1;answerOpen[g]=false;answerRevealed[g]=false;});
 
-function totalScore(id){return Object.values(gameScores[id]).reduce((a,b)=>a+b,0);}
+function totalScore(id){return Math.round(Object.values(gameScores[id]).reduce((a,b)=>a+b,0)*10)/10;}
 window._totalScore=totalScore;
-
 function pushState(){if(window._pushState)window._pushState();}
 
 function switchTab(tab,btn){
@@ -350,10 +373,9 @@ function switchTab(tab,btn){
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('panel-'+tab).classList.add('active');
   if(btn)btn.classList.add('active');
-  if(tab==='breakdown')renderBreakdown();
-  if(tab==='group')renderGroup();
-  if(tab==='ice')renderIce();
+  if(tab==='score'){renderBreakdown();}
   if(tab==='answers')renderAnswerTabs();
+  if(tab==='group')renderGroup();
 }
 window.switchTab=switchTab;
 
@@ -361,8 +383,7 @@ function addScore(pid,pts,game){
   game=game||activeGame;
   gameScores[pid][game]=Math.round((gameScores[pid][game]+pts)*10)/10;
   if(gameScores[pid][game]<0)gameScores[pid][game]=0;
-  renderScoreGrid();renderLeaderboard();
-  if(document.getElementById('panel-breakdown').classList.contains('active'))renderBreakdown();
+  renderScoreGrid();renderLeaderboard();renderBreakdown();
   toast(`${PLAYERS[pid].name} ${pts>0?'+':''}${pts}分 (${game})`);
   pushState();
 }
@@ -373,12 +394,10 @@ function renderLeaderboard(){
   const max=Math.max(...PLAYERS.map(p=>totalScore(p.id)),1);
   const medals=['🥇','🥈','🥉','4','5','6','7','8','9'];
   document.getElementById('lbList').innerHTML=sorted.map((p,i)=>`
-    <div class="lb-row">
-      <div class="lb-rank">${medals[i]}</div>
-      <div class="lb-name" style="color:${p.color}">${p.name}</div>
-      <div class="lb-bar-wrap"><div class="lb-bar" style="width:${(p.score/max)*100}%;background:${p.color}"></div></div>
-      <div class="lb-pts">${p.score}</div>
-    </div>`).join('');
+    <div class="lb-row"><div class="lb-rank">${medals[i]}</div>
+    <div class="lb-name" style="color:${p.color}">${p.name}</div>
+    <div class="lb-bar-wrap"><div class="lb-bar" style="width:${(p.score/max)*100}%;background:${p.color}"></div></div>
+    <div class="lb-pts">${p.score}</div></div>`).join('');
 }
 window._renderLeaderboard=renderLeaderboard;
 
@@ -397,13 +416,12 @@ function renderScoreGrid(){
       <div class="player-name">${p.name}</div>
       <div class="player-score" style="color:${p.color}">${totalScore(p.id)}</div>
       <div class="score-controls">
-        <button class="score-btn" onclick="addScore(${p.id},2)">+2</button>
-        <button class="score-btn" onclick="addScore(${p.id},1)">+1</button>
-        <button class="score-btn" onclick="addScore(${p.id},0.5)">+½</button>
-        <button class="score-btn minus" onclick="addScore(${p.id},-0.5)">-½</button>
-        <button class="score-btn minus" onclick="addScore(${p.id},-1)">-1</button>
-      </div>
-    </div>`;
+        <button class="sbtn" onclick="addScore(${p.id},2)">+2</button>
+        <button class="sbtn" onclick="addScore(${p.id},1)">+1</button>
+        <button class="sbtn" onclick="addScore(${p.id},0.5)">+½</button>
+        <button class="sbtn minus" onclick="addScore(${p.id},-0.5)">-½</button>
+        <button class="sbtn minus" onclick="addScore(${p.id},-1)">-1</button>
+      </div></div>`;
   }).join('');
 }
 window._renderScoreGrid=renderScoreGrid;
@@ -413,15 +431,13 @@ function renderBreakdown(){
     `<div class="game-tag ${g===activeGame?'active':''}" onclick="selectGame('${g}')">${g}</div>`).join('');
   document.getElementById('gameScoreTitle').textContent=activeGame;
   document.getElementById('gameScoreGrid').innerHTML=PLAYERS.map(p=>`
-    <div class="gpi">
-      <div class="gpi-name" style="color:${p.color}">${p.name}</div>
-      <div class="gpi-pts" style="color:${p.color}">${gameScores[p.id][activeGame]||0}</div>
-      <div class="gpi-ctrl">
-        <button class="score-btn" onclick="addScore(${p.id},1,'${activeGame}')">+1</button>
-        <button class="score-btn" onclick="addScore(${p.id},0.5,'${activeGame}')">+½</button>
-        <button class="score-btn minus" onclick="addScore(${p.id},-0.5,'${activeGame}')">-½</button>
-      </div>
-    </div>`).join('');
+    <div class="gpi"><div class="gpi-name" style="color:${p.color}">${p.name}</div>
+    <div class="gpi-pts" style="color:${p.color}">${gameScores[p.id][activeGame]||0}</div>
+    <div class="gpi-ctrl">
+      <button class="sbtn" onclick="addScore(${p.id},1,'${activeGame}')">+1</button>
+      <button class="sbtn" onclick="addScore(${p.id},0.5,'${activeGame}')">+½</button>
+      <button class="sbtn minus" onclick="addScore(${p.id},-0.5,'${activeGame}')">-½</button>
+    </div></div>`).join('');
   const sorted=PLAYERS.map(p=>({...p,score:totalScore(p.id)})).sort((a,b)=>b.score-a.score);
   document.getElementById('detailTable').innerHTML=
     `<tr><th>玩家</th>${GAMES.map(g=>`<th>${g}</th>`).join('')}<th>總分</th></tr>`+
@@ -429,9 +445,9 @@ function renderBreakdown(){
 }
 window.selectGame=function(g){activeGame=g;renderBreakdown();};
 
-// ANSWER PANEL
+// ANSWERS
 function renderAnswerTabs(){
-  document.getElementById('answerGameTabs').innerHTML=ANSWER_GAMES.map(g=>
+  document.getElementById('answerGameTabs').innerHTML=Object.keys(ANSWER_GAMES).map(g=>
     `<div class="game-tag ${g===activeAnswerGame?'active':''}" onclick="selectAnswerGame('${g}')">${g}</div>`).join('');
   renderAnswerPanel();
 }
@@ -439,51 +455,60 @@ window._renderAnswerPanel=renderAnswerPanel;
 
 function renderAnswerPanel(){
   const g=activeAnswerGame;
-  const isOpen=answerRoundOpen[g];
+  const info=ANSWER_GAMES[g];
+  const qNum=answerQNum[g]||1;
+  const isOpen=answerOpen[g];
   const isRevealed=answerRevealed[g];
-  const answers=window._allAnswers[g]||{};
+  const answers=(window._allAnswers[g]||{})[qNum]||{};
+  const correctAns=info.answers[qNum-1]||'';
   const box=document.getElementById('answerPanelBox');
   box.innerHTML=`
-    <div class="answer-panel-title">
-      ${g}
-      <span class="answer-status-badge ${isOpen?'open':''}">${isOpen?'● 作答中':isRevealed?'✓ 已公布':'待開放'}</span>
+    <div class="answer-panel-title">${g}<span class="asbadge ${isOpen?'open':''}">${isOpen?'● 作答中':isRevealed?'✓ 已公布':'待開放'}</span></div>
+    <div class="q-nav">
+      <div class="q-num">Q${qNum}</div>
+      <div class="q-total">/ ${info.total}</div>
     </div>
-    <div style="margin-bottom:14px;">
-      <input class="correct-answer-input" id="correctAnswerInput" placeholder="輸入正確答案（方便對照）" value="${answerRevealed[g]||''}">
-    </div>
+    <div class="correct-answer-display">✅ 正確答案：${correctAns}</div>
     <div class="ctrl-row">
-      <button class="answer-open-btn" onclick="toggleAnswerRound('${g}')">${isOpen?'⏸ 關閉作答':'▶ 開放作答'}</button>
-      <button class="answer-reveal-btn" onclick="revealAnswers('${g}')" ${!isOpen&&!Object.keys(answers).length?'disabled':''}>👁 公布答案</button>
+      <button class="open-btn" onclick="toggleAnswer('${g}')">${isOpen?'⏸ 關閉作答':'▶ 開放作答'}</button>
+      <button class="reveal-btn" onclick="revealAnswer('${g}')">👁 公布答案</button>
+      ${qNum<info.total?`<button class="next-btn" onclick="nextQuestion('${g}')">下一題 ▶</button>`:'<span style="font-size:12px;color:var(--teal)">✓ 最後一題</span>'}
     </div>
     <div class="answers-grid">
       ${PLAYERS.map(p=>{
         const a=answers[p.id];
-        return `<div class="answer-card ${a?'has-answer':''}">
-          <div class="answer-card-name" style="color:${p.color}">${p.name}</div>
-          ${a?`<div class="answer-card-text ${isRevealed?'':'hidden'}">${a.answer||''}</div>`:
-          `<div class="answer-card-waiting">⏳ 等待中</div>`}
+        return`<div class="ac ${a?'has':''}">
+          <div class="ac-name" style="color:${p.color}">${p.name}</div>
+          ${a?`<div class="ac-text ${isRevealed?'':'blur'}">${a.answer}</div>`:`<div class="ac-wait">⏳</div>`}
         </div>`;
       }).join('')}
     </div>`;
 }
 
 window.selectAnswerGame=function(g){activeAnswerGame=g;renderAnswerTabs();};
-
-window.toggleAnswerRound=function(g){
-  answerRoundOpen[g]=!answerRoundOpen[g];
-  if(answerRoundOpen[g])answerRevealed[g]=false;
-  if(window._pushAnswerState)window._pushAnswerState(g,{open:answerRoundOpen[g],revealed:false,ts:Date.now()});
+window.toggleAnswer=function(g){
+  answerOpen[g]=!answerOpen[g];
+  answerRevealed[g]=false;
+  const qNum=answerQNum[g]||1;
+  if(window._pushAnswerState)window._pushAnswerState(g,qNum,{open:answerOpen[g],revealed:false,ts:Date.now()});
   renderAnswerPanel();
-  toast(answerRoundOpen[g]?`${g} 作答開放！`:`${g} 作答已關閉`);
+  toast(answerOpen[g]?`Q${qNum} 作答開放！`:`Q${qNum} 作答關閉`);
 };
-
-window.revealAnswers=function(g){
-  answerRevealed[g]=true;
-  answerRoundOpen[g]=false;
-  const correctAnswer=document.getElementById('correctAnswerInput')?.value||'';
-  if(window._pushAnswerState)window._pushAnswerState(g,{open:false,revealed:true,correctAnswer,ts:Date.now()});
+window.revealAnswer=function(g){
+  answerRevealed[g]=true;answerOpen[g]=false;
+  const qNum=answerQNum[g]||1;
+  const correctAns=ANSWER_GAMES[g].answers[qNum-1]||'';
+  if(window._pushAnswerState)window._pushAnswerState(g,qNum,{open:false,revealed:true,correctAnswer:correctAns,ts:Date.now()});
   renderAnswerPanel();
-  toast(`${g} 答案已公布！`);
+  toast(`Q${qNum} 答案已公布！`);
+};
+window.nextQuestion=function(g){
+  answerQNum[g]=(answerQNum[g]||1)+1;
+  answerOpen[g]=false;answerRevealed[g]=false;
+  const qNum=answerQNum[g];
+  if(window._pushAnswerState)window._pushAnswerState(g,qNum,{open:false,revealed:false,ts:Date.now()});
+  renderAnswerPanel();
+  toast(`切換到 Q${qNum}`);
 };
 
 // MISSION
@@ -492,8 +517,7 @@ function renderDrawSelect(){
     PLAYERS.filter(p=>!(p.id in missionAssigned)).map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
 }
 window.drawMission=function(){
-  const sel=document.getElementById('drawSelect');
-  const pid=parseInt(sel.value);
+  const sel=document.getElementById('drawSelect');const pid=parseInt(sel.value);
   if(isNaN(pid)){toast('請先選擇玩家 👆');return;}
   if(availableMissions.length===0){toast('任務已全部分配');return;}
   const idx=Math.floor(Math.random()*availableMissions.length);
@@ -515,67 +539,124 @@ window.completeMission=function(pid){
   if(missionDone[pid]||missionFailed[pid])return;
   missionDone[pid]=true;
   const isFirst=Object.keys(missionDone).length===1;
+  addScore(pid,3,'秘密任務');
+  if(isFirst)addScore(pid,1,'秘密任務');
   renderMissionStatus();renderScoreGrid();
-  toast(isFirst?`🎉 ${PLAYERS[pid].name} 第一個完成！神秘禮物！`:`✅ ${PLAYERS[pid].name} 完成任務！`);
-  pushState();
+  toast(isFirst?`🎉 ${PLAYERS[pid].name} 第一個完成！+4分！神秘禮物！`:`✅ ${PLAYERS[pid].name} 完成任務！+3分！`);
 };
 window.failMission=function(pid){
   if(missionDone[pid]||missionFailed[pid])return;
   missionFailed[pid]=true;
   renderMissionStatus();renderScoreGrid();
-  toast(`❌ ${PLAYERS[pid].name} 的任務被發現！`);
+  toast(`❌ ${PLAYERS[pid].name} 的任務被發現！0分`);
   pushState();
 };
 function renderMissionStatus(){
   document.getElementById('missionStatusList').innerHTML=PLAYERS.map(p=>{
     const drawn=p.id in missionAssigned,done=missionDone[p.id],failed=missionFailed[p.id];
     const dc=done?'done':failed?'failed':drawn?'drawn':'';
-    const st=done?'✅ 完成':failed?'❌ 被發現':drawn?'🎲 已抽到':'⏳ 未抽';
+    const st=done?'✅ 完成 +3':failed?'❌ 被發現':drawn?'🎲 已抽到':'⏳ 未抽';
     const btns=drawn&&!done&&!failed?`<div class="mbtns"><button class="mcbtn" onclick="completeMission(${p.id})">完成</button><button class="mfbtn" onclick="failMission(${p.id})">被發現</button></div>`:'';
-    return `<div class="mrow"><div class="mdot ${dc}"></div><div class="mname">${p.name}</div><div class="mstate">${st}</div>${btns}</div>`;
+    return`<div class="mrow"><div class="mdot ${dc}"></div><div class="mname">${p.name}</div><div class="mstate">${st}</div>${btns}</div>`;
   }).join('');
 }
+window._renderMissionStatus=renderMissionStatus;
 
 // GROUP
-function renderGroup(){
-  const assigned=[...teamA,...teamB];
-  const unassigned=PLAYERS.filter(p=>!assigned.includes(p.id));
-  document.getElementById('unassignedChips').innerHTML=unassigned.map(p=>
-    `<div class="uchip" style="border-color:${p.color};color:${p.color}" onclick="assignTeam(${p.id})">${p.name}</div>`).join('');
-  document.getElementById('teamAMembers').innerHTML=teamA.map(id=>{const p=PLAYERS[id];return`<div class="tmc in-a" onclick="removeFromTeam(${id},'A')">${p.name} ✕</div>`;}).join('');
-  document.getElementById('teamBMembers').innerHTML=teamB.map(id=>{const p=PLAYERS[id];return`<div class="tmc in-b" onclick="removeFromTeam(${id},'B')">${p.name} ✕</div>`;}).join('');
+const TEAM_COLORS={A:'#ff80cc',B:'#80aaff',C:'#40e090'};
+function switchGroupTab(tab,btn){
+  document.querySelectorAll('.group-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('groupDancePanel').style.display=tab==='dance'?'block':'none';
+  document.getElementById('groupWordPanel').style.display=tab==='word'?'block':'none';
+  renderGroup();
 }
-window.assignTeam=function(pid){if(teamA.length<=teamB.length)teamA.push(pid);else teamB.push(pid);renderGroup();};
-window.removeFromTeam=function(pid,t){if(t==='A')teamA=teamA.filter(x=>x!==pid);else teamB=teamB.filter(x=>x!==pid);renderGroup();};
-window.addTeamScore=function(t){
-  const members=t==='A'?teamA:teamB;
-  const game=t==='A'?'跳舞接龍':'詞語接龍';
-  members.forEach(pid=>addScore(pid,3,game));
-  toast(`🏆 ${t}隊全員 +3分！`);
-};
-window.resetTeams=function(){teamA=[];teamB=[];renderGroup();};
+window.switchGroupTab=switchGroupTab;
 
-function renderIce(){
-  document.getElementById('iceGrid').innerHTML=PLAYERS.map(p=>`
-    <div class="ice-card">
-      <div class="ice-avatar" style="background:${p.color}33;border:2px solid ${p.color};color:${p.color}">${p.name.slice(0,2)}</div>
-      <div class="ice-name">${p.name}</div>
+function renderGroup(){
+  renderDanceGroup();renderWordGroup();
+}
+
+function renderDanceGroup(){
+  const assigned=[...danceTeams.A,...danceTeams.B];
+  const unassigned=PLAYERS.filter(p=>!assigned.includes(p.id));
+  document.getElementById('danceUnassigned').innerHTML=unassigned.map(p=>
+    `<div class="uchip" style="border-color:${p.color};color:${p.color}" onclick="assignDance(${p.id})">${p.name}</div>`).join('');
+  document.getElementById('danceTeams').innerHTML=['A','B'].map(t=>`
+    <div class="team-box">
+      <div class="team-label" style="color:${TEAM_COLORS[t]}">⭐ ${t} 隊 <span style="font-family:'Bebas Neue',sans-serif;font-size:24px">${danceScores[t]}</span></div>
+      <div class="team-members">${danceTeams[t].map(id=>{const p=PLAYERS[id];return`<div class="tmc" style="border-color:${TEAM_COLORS[t]};color:${TEAM_COLORS[t]};background:${TEAM_COLORS[t]}22" onclick="removeDance(${id},'${t}')">${p.name} ✕</div>`;}).join('')}</div>
     </div>`).join('');
 }
 
-// AWARD
+function renderWordGroup(){
+  const assigned=[...wordTeams.A,...wordTeams.B,...wordTeams.C];
+  const unassigned=PLAYERS.filter(p=>!assigned.includes(p.id));
+  document.getElementById('wordUnassigned').innerHTML=unassigned.map(p=>
+    `<div class="uchip" style="border-color:${p.color};color:${p.color}" onclick="assignWord(${p.id})">${p.name}</div>`).join('');
+  document.getElementById('wordTeams').innerHTML=['A','B','C'].map(t=>`
+    <div class="team-box">
+      <div class="team-label" style="color:${TEAM_COLORS[t]}">⭐ ${t} 組 <span style="font-family:'Bebas Neue',sans-serif;font-size:24px">${wordScores[t]}</span></div>
+      <div class="team-members">${wordTeams[t].map(id=>{const p=PLAYERS[id];return`<div class="tmc" style="border-color:${TEAM_COLORS[t]};color:${TEAM_COLORS[t]};background:${TEAM_COLORS[t]}22" onclick="removeWord(${id},'${t}')">${p.name} ✕</div>`;}).join('')}</div>
+    </div>`).join('');
+}
+
+window.assignDance=function(pid){
+  if(danceTeams.A.length<=danceTeams.B.length)danceTeams.A.push(pid);else danceTeams.B.push(pid);
+  renderDanceGroup();
+};
+window.removeDance=function(pid,t){danceTeams[t]=danceTeams[t].filter(x=>x!==pid);renderDanceGroup();};
+window.danceCorrect=function(t){danceScores[t]++;renderDanceGroup();toast(`${t}隊猜中 +1！(${t}隊 ${danceScores[t]}分)`);};
+window.danceFinish=function(){
+  const winner=danceScores.A>danceScores.B?'A':danceScores.B>danceScores.A?'B':'平手';
+  if(winner==='平手'){toast('平手！兩隊都加分！');['A','B'].forEach(t=>danceTeams[t].forEach(pid=>addScore(pid,3,'跳舞接龍')));}
+  else{toast(`🏆 ${winner}隊獲勝！全員+3分！`);danceTeams[winner].forEach(pid=>addScore(pid,3,'跳舞接龍'));}
+};
+window.resetDance=function(){danceTeams={A:[],B:[]};danceScores={A:0,B:0};renderDanceGroup();};
+
+window.assignWord=function(pid){
+  const counts=[wordTeams.A.length,wordTeams.B.length,wordTeams.C.length];
+  const minIdx=counts.indexOf(Math.min(...counts));
+  ['A','B','C'][minIdx]&&wordTeams[['A','B','C'][minIdx]].push(pid);
+  renderWordGroup();
+};
+window.removeWord=function(pid,t){wordTeams[t]=wordTeams[t].filter(x=>x!==pid);renderWordGroup();};
+window.wordCorrect=function(t){
+  wordScores[t]++;
+  wordTeams[t].forEach(pid=>addScore(pid,1,'詞語接龍'));
+  renderWordGroup();
+  toast(`${t}組完成一個詞！全員+1分！`);
+};
+window.resetWord=function(){wordTeams={A:[],B:[],C:[]};wordScores={A:0,B:0,C:0};renderWordGroup();};
+
+// RESET PLAYERS
+window.resetPlayers=function(){
+  if(!confirm('確定要重置所有玩家登入狀態嗎？'))return;
+  if(window._resetPlayers)window._resetPlayers();
+  toast('✅ 玩家已重置！');
+};
+
+// AWARD - reveal one by one
+let awardSorted=[];
 window.showAward=function(){
-  const sorted=PLAYERS.map(p=>({...p,score:totalScore(p.id)})).sort((a,b)=>b.score-a.score);
-  const top3=sorted.slice(0,3);
-  const order=[1,0,2];const medals=['🥇','🥈','🥉'];const barCls=['first','second','third'];
-  document.getElementById('awardPodium').innerHTML=order.map(i=>{
-    const p=top3[i];if(!p)return'';
-    return`<div class="podium-item"><div class="podium-medal">${medals[i]}</div>
-      <div class="podium-avatar" style="background:${p.color}33;border-color:${p.color};color:${p.color}">${p.name.slice(0,2)}</div>
-      <div class="podium-name">${p.name}</div><div class="podium-score">${p.score}分</div>
-      <div class="podium-bar ${barCls[i]}"></div></div>`;
-  }).join('');
-  document.getElementById('awardOverlay').classList.add('show');startConfetti();
+  awardSorted=PLAYERS.map(p=>({...p,score:totalScore(p.id)})).sort((a,b)=>b.score-a.score);
+  document.querySelectorAll('.reveal-step').forEach(s=>s.classList.remove('show'));
+  document.getElementById('awardOverlay').classList.add('show');
+  startConfetti();
+  showRank(3);
+};
+window.showRank=function(rank){
+  document.querySelectorAll('.reveal-step').forEach(s=>s.classList.remove('show'));
+  const p=awardSorted[rank-1];if(!p)return;
+  document.getElementById(`avatar${rank}`).style.background=p.color+'33';
+  document.getElementById(`avatar${rank}`).style.borderColor=p.color;
+  document.getElementById(`avatar${rank}`).style.color=p.color;
+  document.getElementById(`avatar${rank}`).style.boxShadow=`0 0 40px ${p.color}66`;
+  document.getElementById(`avatar${rank}`).textContent=p.name.slice(0,2);
+  document.getElementById(`name${rank}`).textContent=p.name;
+  document.getElementById(`name${rank}`).style.color=p.color;
+  document.getElementById(`score${rank}`).textContent=p.score+'分';
+  document.getElementById(`revealStep${rank}`).classList.add('show');
 };
 window.closeAward=function(){document.getElementById('awardOverlay').classList.remove('show');stopConfetti();};
 
@@ -583,7 +664,7 @@ let confettiAnim;
 function startConfetti(){
   const canvas=document.getElementById('confettiCanvas');const ctx=canvas.getContext('2d');
   canvas.width=window.innerWidth;canvas.height=window.innerHeight;
-  const pieces=Array.from({length:120},()=>({x:Math.random()*canvas.width,y:Math.random()*canvas.height-canvas.height,r:Math.random()*8+4,color:['#c050ff','#ff40cc','#ffcc00','#00f0c8','#ff8040','#80aaff'][Math.floor(Math.random()*6)],speed:Math.random()*3+1,wobble:Math.random()*2-1,angle:Math.random()*360}));
+  const pieces=Array.from({length:150},()=>({x:Math.random()*canvas.width,y:Math.random()*canvas.height-canvas.height,r:Math.random()*8+4,color:['#c050ff','#ff40cc','#ffcc00','#00f0c8','#ff8040','#80aaff'][Math.floor(Math.random()*6)],speed:Math.random()*3+1,wobble:Math.random()*2-1,angle:Math.random()*360}));
   function draw(){ctx.clearRect(0,0,canvas.width,canvas.height);pieces.forEach(p=>{p.y+=p.speed;p.x+=p.wobble;p.angle+=3;if(p.y>canvas.height){p.y=-10;p.x=Math.random()*canvas.width;}ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.angle*Math.PI/180);ctx.fillStyle=p.color;ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r);ctx.restore();});confettiAnim=requestAnimationFrame(draw);}
   draw();
 }
@@ -598,13 +679,11 @@ window.timerToggle=function(){
 };
 window.timerReset=function(s){clearInterval(timerInterval);timerRunning=false;timerVal=s;document.getElementById('timerStartBtn').textContent='▶ 開始';updateTimerDisplay();};
 function updateTimerDisplay(){const el=document.getElementById('timerDisplay');const m=Math.floor(timerVal/60),s=timerVal%60;el.textContent=m>0?`${m}:${String(s).padStart(2,'0')}`:String(timerVal);el.className='timer-display'+(timerVal<=10&&timerVal>0?' warning':'');}
-function playTimeUpSound(){try{const ctx=new(window.AudioContext||window.webkitAudioContext)();[523,659,784,1047].forEach((freq,i)=>{const o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.frequency.value=freq;g.gain.setValueAtTime(0.3,ctx.currentTime+i*0.15);g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+i*0.15+0.3);o.start(ctx.currentTime+i*0.15);o.stop(ctx.currentTime+i*0.15+0.3);});}catch(e){}}
+function playTimeUpSound(){try{const ctx=new(window.AudioContext||window.webkitAudioContext)();[523,659,784,1047].forEach((f,i)=>{const o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.frequency.value=f;g.gain.setValueAtTime(0.3,ctx.currentTime+i*0.15);g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+i*0.15+0.3);o.start(ctx.currentTime+i*0.15);o.stop(ctx.currentTime+i*0.15+0.3);});}catch(e){}}
 
-function toast(msg){const wrap=document.getElementById('toastWrap');const el=document.createElement('div');el.className='toast';el.textContent=msg;wrap.appendChild(el);setTimeout(()=>el.remove(),3000);}
-
+function toast(msg){const wrap=document.getElementById('toastWrap');const el=document.createElement('div');el.className='toast';el.textContent=msg;wrap.appendChild(el);setTimeout(()=>el.remove(),3500);}
 document.getElementById('logoImg').onerror=function(){this.style.display='none';document.getElementById('fallbackTitle').style.display='block';};
-
-renderScoreGrid();renderLeaderboard();renderDrawSelect();renderMissionStatus();
+renderScoreGrid();renderLeaderboard();renderBreakdown();renderDrawSelect();renderMissionStatus();
 </script>
 </body>
 </html>
